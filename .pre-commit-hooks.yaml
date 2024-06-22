@@ -1,8 +1,8 @@
 ---
-- id: grype-container-podman
-  name: Grype Container Podman
-  description: Scans image from the podman daemon
-  entry: hooks/snyk-container-podman.sh
+- id: grype-dir
+  name: Grype Dir
+  description: Scans directory
+  entry: hooks/grype-dir.sh
   language: script
   pass_filenames: false
   verbose: true
