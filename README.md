@@ -5,25 +5,13 @@
 ![security](https://github.com/fabasoad/pre-commit-grype/actions/workflows/security.yml/badge.svg)
 ![linting](https://github.com/fabasoad/pre-commit-grype/actions/workflows/linting.yml/badge.svg)
 
-1. [snyk-container](#snyk-container)
-2. [snyk-iac](#snyk-iac)
-3. [snyk-test](#snyk-test)
-4. [snyk-code](#snyk-code)
-5. [snyk-log4shell](#snyk-log4shell)
+1. [grype-dir](#grype-dir)
 
-## Description
+## How it works?
 
-Take into account that in case `snyk` is not installed locally it will be
-automatically installed **globally**. Here is the order of the attempts for
-this tool to install `snyk`:
-
-- [brew](https://brew.sh/), hence it should be installed.
-- [scoop](https://scoop.sh/), hence it should be installed.
-- [npm](https://nodejs.org/en/download/), hence it should be installed.
-- [yarn](https://yarnpkg.com/cli/install), hence it should be installed.
-- Standalone installation, for this [curl](https://curl.se/) has to be installed.
-
-If none of the tools above are installed then installation process will fail.
+At first hook tries to use globally installed `grype` tool. And if it doesn't exist
+then hook installs `grype` into a temporary directory that will be removed after
+scanning is completed.
 
 ## Documentation
 
@@ -32,14 +20,14 @@ If none of the tools above are installed then installation process will fail.
 > `<rev>` in the examples below, is the latest revision tag from [fabasoad/pre-commit-grype](https://github.com/fabasoad/pre-commit-grype/releases)
 > repository.
 
-### snyk-container
+### grype-dir
 
 ```yaml
 repos:
   - repo: https://github.com/fabasoad/pre-commit-grype
     rev: <rev>
     hooks:
-      - id: snyk-container
+      - id: grype-dir
         args: ["--exclude-base-image-vulns"]
 ```
 
