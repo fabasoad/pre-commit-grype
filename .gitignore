@@ -1,0 +1,7 @@
+.DS_Store
+.gitleaks.toml
+.vscode/*
+!.vscode/settings.json
+.envrc
+.idea
+.dccache

@@ -1,0 +1,101 @@
+# Grype pre-commit hooks
+
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
+![GitHub release](https://img.shields.io/github/v/release/fabasoad/pre-commit-grype?include_prereleases)
+![security](https://github.com/fabasoad/pre-commit-grype/actions/workflows/security.yml/badge.svg)
+![linting](https://github.com/fabasoad/pre-commit-grype/actions/workflows/linting.yml/badge.svg)
+
+1. [snyk-container](#snyk-container)
+2. [snyk-iac](#snyk-iac)
+3. [snyk-test](#snyk-test)
+4. [snyk-code](#snyk-code)
+5. [snyk-log4shell](#snyk-log4shell)
+
+## Description
+
+Take into account that in case `snyk` is not installed locally it will be
+automatically installed **globally**. Here is the order of the attempts for
+this tool to install `snyk`:
+
+- [brew](https://brew.sh/), hence it should be installed.
+- [scoop](https://scoop.sh/), hence it should be installed.
+- [npm](https://nodejs.org/en/download/), hence it should be installed.
+- [yarn](https://yarnpkg.com/cli/install), hence it should be installed.
+- Standalone installation, for this [curl](https://curl.se/) has to be installed.
+
+If none of the tools above are installed then installation process will fail.
+
+## Documentation
+
+<!-- markdownlint-disable-next-line MD013 -->
+
+> `<rev>` in the examples below, is the latest revision tag from [fabasoad/pre-commit-grype](https://github.com/fabasoad/pre-commit-grype/releases)
+> repository.
+
+### snyk-container
+
+```yaml
+repos:
+  - repo: https://github.com/fabasoad/pre-commit-grype
+    rev: <rev>
+    hooks:
+      - id: snyk-container
+        args: ["--exclude-base-image-vulns"]
+```
+
+> `args` is optional. In this example you can skip base image vulnerabilities.
+
+### snyk-iac
+
+```yaml
+repos:
+  - repo: https://github.com/fabasoad/pre-commit-grype
+    rev: <rev>
+    hooks:
+      - id: snyk-iac
+        args:["<folder>","--severity-threshold=<severity-level>"]
+```
+
+Where:
+
+- `<folder>` is the folder path that you want to test.
+- `<severity-level>` only vulnerabilities of the specified level or higher are reported.
+
+  Options are:
+
+  - low
+  - medium
+  - high
+  - critical
+
+### snyk-test
+
+```yaml
+repos:
+  - repo: https://github.com/fabasoad/pre-commit-grype
+    rev: <rev>
+    hooks:
+      - id: snyk-test
+        args: ["--severity-threshold=critical"]
+```
+
+### snyk-code
+
+```yaml
+repos:
+  - repo: https://github.com/fabasoad/pre-commit-grype
+    rev: <rev>
+    hooks:
+      - id: snyk-code
+        args: ["--severity-threshold=critical"]
+```
+
+### snyk-log4shell
+
+```yaml
+repos:
+  - repo: https://github.com/fabasoad/pre-commit-grype
+    rev: <rev>
+    hooks:
+      - id: snyk-log4shell
+```

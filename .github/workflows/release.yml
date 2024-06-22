@@ -1,0 +1,14 @@
+---
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  github:
+    name: GitHub
+    uses: fabasoad/reusable-workflows/.github/workflows/wf-github-release.yml@main
+    with:
+      bump-tags: false
