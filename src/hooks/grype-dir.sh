@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
 set -u
 
-SCRIPT_PATH=$(realpath "$0")
-HOOKS_DIR_PATH=$(dirname "${SCRIPT_PATH}")
-SRC_DIR_PATH=$(dirname "${HOOKS_DIR_PATH}")
-UTILS_DIR_PATH="${SRC_DIR_PATH}/utils"
+MAIN_SCRIPT_PATH=$(realpath "$0")
+SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
+LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
+ARGS_DIR_PATH="${LIB_DIR_PATH}/args"
+INSTALLATION_DIR_PATH="${LIB_DIR_PATH}/installation"
+UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 
-. "${UTILS_DIR_PATH}/install.sh"
+. "${ARGS_DIR_PATH}/parse-args.sh"
+. "${INSTALLATION_DIR_PATH}/install.sh"
+. "${INSTALLATION_DIR_PATH}/uninstall.sh"
 . "${UTILS_DIR_PATH}/logging.sh"
-. "${UTILS_DIR_PATH}/parse-args.sh"
-. "${UTILS_DIR_PATH}/uninstall.sh"
 
-main() {
-  declare -A args_map
-
-  grype_args="dir:. $(parse_args_grype "$@")"
-  hook_args=$(parse_args_hook "$@")
-  unknown_args=$(parse_args_unknown "$@")
+grype_dir() {
+  hook_args=$(parse_args_hook "$@" | xargs)
+  grype_args="dir:. $(parse_args_grype "$@" | xargs)"
+  unknown_args=$(parse_args_unknown "$@" | xargs)
 
   if [ "${unknown_args}" != "" ]; then
-    log_warning "The following unknown args have been passed to pre-commit-grype hook: ${unknown_args}"
+    log_warning "The following unknown args have been passed to pre-commit-grype hook: \"${unknown_args}\""
   fi
 
   res=$(install)
@@ -29,6 +29,7 @@ main() {
   log_info "Grype path: ${grype_path}"
   log_info "Grype version: ${grype_version}"
   log_info "Grype will$([[ "${to_uninstall}" = "true" ]] && echo "" || echo " not") be uninstalled after scanning completed"
+  log_info "Arguments: ${grype_args}"
 
   set +e
   ${grype_path} ${grype_args}
@@ -44,5 +45,3 @@ main() {
   try_uninstall "$(dirname ${grype_path})" "${to_uninstall}"
   exit "${grype_exit_code}"
 }
-
-main "$@"

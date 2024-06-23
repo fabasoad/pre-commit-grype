@@ -1,10 +1,9 @@
 #!/usr/bin/env sh
 
-SCRIPT_PATH=$(realpath "$0")
-HOOKS_DIR_PATH=$(dirname "${SCRIPT_PATH}")
-SRC_DIR_PATH=$(dirname "${HOOKS_DIR_PATH}")
-ROOT_DIR_PATH=$(dirname "${SRC_DIR_PATH}")
-UTILS_DIR_PATH="${SRC_DIR_PATH}/utils"
+MAIN_SCRIPT_PATH=$(realpath "$0")
+SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
+LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
+UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 
 . "${UTILS_DIR_PATH}/logging.sh"
 
