@@ -9,7 +9,7 @@ UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 . "${LIB_DIR_PATH}/default.sh"
 . "${UTILS_DIR_PATH}/validators.sh"
 
-args="$1"
+args="$@"
 
 case "${args:0:9}" in
   "grype-dir")
