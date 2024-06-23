@@ -7,25 +7,50 @@ UTILS_DIR_PATH="${SRC_DIR_PATH}/utils"
 
 . "${UTILS_DIR_PATH}/logging.sh"
 
-parse_args() {
-  log_debug "Parsing arguments started"
-  local -n map_ref=$1
-  args="$2"
+parse_args_grype() {
+  log_debug "Parsing --grype-args started"
 
-  for arg in "${args}"; do
-    log_debug "Parsing $arg argument"
-    if [ "${arg#--hook-args}" != "$arg" ]; then
-      arg=$(echo "${arg}" | cut -d '=' -f 2)
-      map_ref["hook-args"]="${map_ref["hook-args"]} ${arg}"
-      log_debug "Marking \"$arg\" argument as hook args"
-    elif [ "${arg#--grype-args}" != "$arg" ]; then
-      arg=$(echo "${arg}" | cut -d '=' -f 2)
-      map_ref["grype-args"]="${map_ref["grype-args"]} ${arg}"
-      log_debug "Marking \"$arg\" argument as grype args"
-    else
-      map_ref["unknown-args"]+="${map_ref["unknown-args"]} ${arg}"
-      log_debug "Marking \"$arg\" argument as unknown args"
+  output=""
+  for arg in "$@"; do
+    if [ "${arg#--grype-args}" != "$arg" ]; then
+      log_debug "Parsing $arg argument"
+      arg=$(echo "${arg}" | cut -d '=' -f 2-)
+      output="${output} ${arg}"
     fi
   done
-  log_debug "Parsing arguments completed"
+  echo "${output}"
+
+  log_debug "Parsing --grype-args completed"
+}
+
+parse_args_hook() {
+  log_debug "Parsing --hook-args started"
+
+  output=""
+  for arg in "$@"; do
+    if [ "${arg#--hook-args}" != "$arg" ]; then
+      log_debug "Parsing $arg argument"
+      arg=$(echo "${arg}" | cut -d '=' -f 2-)
+      output="${output} ${arg}"
+    fi
+  done
+  echo "${output}"
+
+  log_debug "Parsing --hook-args completed"
+}
+
+parse_args_unknown() {
+  log_debug "Parsing unknown args started"
+
+  output=""
+  for arg in "$@"; do
+    if [ "${arg#--grype-args}" = "$arg" ] && [ "${arg#--hook-args}" = "$arg" ]; then
+      log_debug "Parsing $arg argument"
+      arg=$(echo "${arg}" | cut -d '=' -f 2-)
+      output="${output} ${arg}"
+    fi
+  done
+  echo "${output}"
+
+  log_debug "Parsing unknown args completed"
 }

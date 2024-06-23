@@ -6,34 +6,32 @@ HOOKS_DIR_PATH=$(dirname "${SCRIPT_PATH}")
 SRC_DIR_PATH=$(dirname "${HOOKS_DIR_PATH}")
 UTILS_DIR_PATH="${SRC_DIR_PATH}/utils"
 
-. "${UTILS_DIR_PATH}/cleanup.sh"
 . "${UTILS_DIR_PATH}/install.sh"
 . "${UTILS_DIR_PATH}/logging.sh"
 . "${UTILS_DIR_PATH}/parse-args.sh"
+. "${UTILS_DIR_PATH}/uninstall.sh"
 
 main() {
   declare -A args_map
 
-  args_map["grype-args"]="dir:."
-  args_map["hook-args"]=""
-  args_map["unknown-args"]=""
+  grype_args="dir:. $(parse_args_grype "$@")"
+  hook_args=$(parse_args_hook "$@")
+  unknown_args=$(parse_args_unknown "$@")
 
-  parse_args "args_map" "$@"
-
-  if [ "${args_map["unknown-args"]}" != "" ]; then
-    log_warning "The following unknown args have been passed to pre-commit-grype hook: ${args_map["unknown-args"]}"
+  if [ "${unknown_args}" != "" ]; then
+    log_warning "The following unknown args have been passed to pre-commit-grype hook: ${unknown_args}"
   fi
 
   res=$(install)
-  cleanup=$(echo "${res}" | cut -d ':' -f 1)
+  to_uninstall=$(echo "${res}" | cut -d ':' -f 1)
   grype_path=$(echo "${res}" | cut -d ':' -f 2)
   grype_version=$(${grype_path} --version | cut -d ' ' -f 2)
   log_info "Grype path: ${grype_path}"
   log_info "Grype version: ${grype_version}"
-  log_info "Remove after complete: ${cleanup}"
+  log_info "Grype will$([[ "${to_uninstall}" = "true" ]] && echo "" || echo " not") be uninstalled after scanning completed"
 
   set +e
-  ${grype_path} ${map_ref["grype-args"]}
+  ${grype_path} ${grype_args}
   grype_exit_code=$?
   set -e
   msg="Grype exit code: ${grype_exit_code}"
@@ -43,9 +41,7 @@ main() {
     log_warning "Grype exit code: ${grype_exit_code}"
   fi
 
-  if [ "${cleanup}" = "true" ]; then
-    cleanup "$(dirname ${grype_path})"
-  fi
+  try_uninstall "$(dirname ${grype_path})" "${to_uninstall}"
   exit "${grype_exit_code}"
 }
 
