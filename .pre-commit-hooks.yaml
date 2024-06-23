@@ -2,7 +2,7 @@
 - id: grype-dir
   name: Grype Dir
   description: Scans directory
-  entry: hooks/grype-dir.sh
+  entry: src/hooks/grype-dir.sh
   language: script
   pass_filenames: false
   verbose: true
