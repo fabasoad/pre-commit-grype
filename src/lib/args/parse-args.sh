@@ -51,21 +51,22 @@ parse_args() {
   hook_args=""
   curr_flag=""
 
+  args="$@"
+
   # Loop through all the arguments
-  while [[ "$#" -gt 0 ]]; do
+  while [[ -n "${args}" ]]; do
     case $1 in
       --hook-args=*)
-        arg="${1#*=}"
-        hook_args="${hook_args} ${arg}"
+        args="${args#*=}"
         curr_flag="hook"
         ;;
       --grype-args=*)
-        arg="${1#*=}"
-        grype_args="${grype_args} ${arg}"
+        args="${args#*=}"
         curr_flag="grype"
         ;;
       *)
-        arg="${1#*=}"
+        arg=$(echo "${args}" | cut -d ' ' -f 1)
+        args=$(echo "${args}" | cut -d ' ' -f 2)
         if [ "${curr_flag}" = "hook" ]; then
           hook_args="${hook_args} ${arg}"
         elif [ "${curr_flag}" = "grype" ]; then
@@ -75,7 +76,6 @@ parse_args() {
         fi
         ;;
     esac
-    shift
   done
 
   log_debug "Hook args: ${hook_args}"
