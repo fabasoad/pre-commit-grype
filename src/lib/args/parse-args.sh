@@ -64,7 +64,9 @@ parse_args() {
         ;;
       *)
         arg="${1#*=}"
-        log_warning "The following unknown arg has been passed to pre-commit-grype hook: \"${arg}\""
+        if [ -n "${arg}" ]; then
+          log_warning "The following unknown arg has been passed to pre-commit-grype hook: \"${arg}\""
+        fi
         ;;
     esac
     shift
