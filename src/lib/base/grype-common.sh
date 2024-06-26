@@ -8,7 +8,7 @@ ARGS_DIR_PATH="${LIB_DIR_PATH}/args"
 INSTALLATION_DIR_PATH="${LIB_DIR_PATH}/installation"
 UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 
-. "${ARGS_DIR_PATH}/parse-args.sh"
+. "${ARGS_DIR_PATH}/parse-all-args.sh"
 . "${INSTALLATION_DIR_PATH}/install.sh"
 . "${INSTALLATION_DIR_PATH}/uninstall.sh"
 . "${UTILS_DIR_PATH}/logging.sh"
@@ -16,7 +16,7 @@ UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 grype_common() {
   cmd="$1"
   shift
-  grype_args="${cmd} $(parse_args "$@")"
+  grype_args="${cmd} $(parse_all_args "$@")"
 
   res=$(install)
   to_uninstall=$(echo "${res}" | cut -d ':' -f 1)

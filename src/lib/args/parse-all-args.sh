@@ -46,7 +46,7 @@ parse_args_unknown() {
   echo "${output}"
 }
 
-parse_args() {
+parse_all_args() {
   grype_args=""
   hook_args=""
   curr_flag=""
@@ -56,28 +56,38 @@ parse_args() {
   # Loop through all the arguments
   while [[ -n "${args}" ]]; do
     case "$(echo "${args}" | cut -d '=' -f 1)" in
-      --hook-args=*)
+      --hook-args)
         args="${args#*=}"
         curr_flag="hook"
         ;;
-      --grype-args=*)
+      --grype-args)
         args="${args#*=}"
         curr_flag="grype"
         ;;
       *)
         arg=$(echo "${args}" | cut -d ' ' -f 1)
-        args=$(echo "${args}" | cut -d ' ' -f 2-)
         if [ "${curr_flag}" = "hook" ]; then
           hook_args="${hook_args} ${arg}"
         elif [ "${curr_flag}" = "grype" ]; then
           grype_args="${grype_args} ${arg}"
         else
-          log_warning "The following unknown arg has been passed to pre-commit-grype hook: \"${arg}\""
+          msg="Invalid format of the following argument: \"${arg}\". Please use"
+          msg="${msg} --hook-args to pass args to pre-commit hook or --grype-args"
+          msg="${msg} to pass args to grype. For more information go to https://github.com/fabasoad/pre-commit-grype?tab=readme-ov-file"
+          log_error "${msg}"
+          exit 1
+        fi
+
+        args=$(echo "${args}" | cut -d ' ' -f 2-)
+        if [ "${arg}" = "${args}" ]; then
+          args=""
         fi
         ;;
     esac
   done
 
-  log_debug "Hook args: ${hook_args}"
-  echo ${grype_args} | sed 's/^ *//'
+  hook_args=$(echo "${hook_args}" | sed 's/^ *//')
+  grype_args=$(echo "${grype_args}" | sed 's/^ *//')
+  log_debug "Hook arguments: ${hook_args}"
+  echo "${grype_args}"
 }
