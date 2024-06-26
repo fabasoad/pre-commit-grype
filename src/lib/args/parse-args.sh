@@ -65,6 +65,7 @@ parse_args() {
         curr_flag="grype"
         ;;
       *)
+        arg=$(echo "${args}" | cut -d ' ' -f 1)
         args=$(echo "${args}" | cut -d ' ' -f 2-)
         if [ "${curr_flag}" = "hook" ]; then
           hook_args="${hook_args} ${arg}"
