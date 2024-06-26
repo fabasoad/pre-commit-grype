@@ -48,23 +48,27 @@ parse_args_unknown() {
 
 parse_args() {
   grype_args=""
+  hook_args=""
+  curr_flag=""
 
   # Loop through all the arguments
   while [[ "$#" -gt 0 ]]; do
     case $1 in
       --hook-args=*)
-        # Extract the value after --hook-arg= and append it to var1
         arg="${1#*=}"
-        apply_hook_arg "${arg}"
+        curr_flag="hook"
         ;;
       --grype-args=*)
-        # Extract the value after --tool-arg= and append it to var2
         arg="${1#*=}"
-        grype_args="${grype_args} ${arg}"
+        curr_flag="grype"
         ;;
       *)
         arg="${1#*=}"
-        if [ -n "${arg}" ]; then
+        if [ "${curr_flag}" = "hook" ]; then
+          hook_args="${hook_args} ${arg}"
+        elif [ "${curr_flag}" = "grype" ]; then
+          grype_args="${grype_args} ${arg}"
+        else
           log_warning "The following unknown arg has been passed to pre-commit-grype hook: \"${arg}\""
         fi
         ;;
@@ -72,5 +76,6 @@ parse_args() {
     shift
   done
 
+  log_debug "Hook args: ${hook_args}"
   echo ${grype_args} | sed 's/^ *//'
 }
