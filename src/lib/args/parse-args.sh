@@ -56,10 +56,12 @@ parse_args() {
     case $1 in
       --hook-args=*)
         arg="${1#*=}"
+        hook_args="${hook_args} ${arg}"
         curr_flag="hook"
         ;;
       --grype-args=*)
         arg="${1#*=}"
+        grype_args="${grype_args} ${arg}"
         curr_flag="grype"
         ;;
       *)
