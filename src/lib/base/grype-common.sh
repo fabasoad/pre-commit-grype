@@ -25,7 +25,7 @@ grype_common() {
   log_info "Grype path: ${grype_path}"
   log_info "Grype version: ${grype_version}"
   log_info "Grype will$([[ "${to_uninstall}" = "true" ]] && echo "" || echo " not") be uninstalled after scanning completed"
-  log_info "Arguments: ${grype_args}"
+  log_info "Grype arguments: ${grype_args}"
 
   set +e
   ${grype_path} ${grype_args}
