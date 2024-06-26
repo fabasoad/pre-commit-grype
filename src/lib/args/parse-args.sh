@@ -55,7 +55,7 @@ parse_args() {
 
   # Loop through all the arguments
   while [[ -n "${args}" ]]; do
-    case $1 in
+    case "$(echo "${args}" | cut -d '=' -f 1)" in
       --hook-args=*)
         args="${args#*=}"
         curr_flag="hook"
@@ -65,7 +65,6 @@ parse_args() {
         curr_flag="grype"
         ;;
       *)
-        arg=$(echo "${args}" | cut -d ' ' -f 1)
         args=$(echo "${args}" | cut -d ' ' -f 2-)
         if [ "${curr_flag}" = "hook" ]; then
           hook_args="${hook_args} ${arg}"
