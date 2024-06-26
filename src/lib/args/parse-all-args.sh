@@ -51,6 +51,8 @@ parse_all_args() {
 
   hook_args=$(echo "${hook_args}" | sed 's/^ *//')
   grype_args=$(echo "${grype_args}" | sed 's/^ *//')
-  log_info "Pre-commit hook arguments: ${hook_args}"
+  if [ -n "${hook_args}" ]; then
+    log_info "Pre-commit hook arguments: ${hook_args}"
+  fi
   echo "${grype_args}"
 }
