@@ -10,14 +10,17 @@ UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 . "${UTILS_DIR_PATH}/validators.sh"
 
 args="$@"
+echo ">>> $@ <<<"
 
-case "${args:0:9}" in
-  "grype-dir")
+cmd_grype_dir="grype-dir"
+
+case "${args}" in
+  "${cmd_grype_dir}"*)
     . "${HOOKS_DIR_PATH}/grype-dir.sh"
-    grype_dir "${args:10}"
+    grype_dir "${args:"${#cmd_grype_dir}"}"
     ;;
   *)
-    is_valid=$(validate_enum "hook" "${hook}" "grype-dir" "error")
+    is_valid=$(validate_enum "hook" "${args}" "grype-dir" "error")
     if [ "${is_valid}" = "false" ]; then
       exit 1
     fi

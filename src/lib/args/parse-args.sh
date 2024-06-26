@@ -4,8 +4,10 @@ MAIN_SCRIPT_PATH=$(realpath "$0")
 SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
 LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 ARGS_DIR_PATH="${LIB_DIR_PATH}/args"
+UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 
 . "${ARGS_DIR_PATH}/apply-hook-arg.sh"
+. "${UTILS_DIR_PATH}/logging.sh"
 
 _parse_argument() {
   arg=$(echo "$1" | cut -d '=' -f 2-)
@@ -42,4 +44,31 @@ parse_args_unknown() {
     fi
   done
   echo "${output}"
+}
+
+parse_args() {
+  grype_args=""
+
+  # Loop through all the arguments
+  while [[ "$#" -gt 0 ]]; do
+    case $1 in
+      --hook-args=*)
+        # Extract the value after --hook-arg= and append it to var1
+        arg="${1#*=}"
+        apply_hook_arg "${arg}"
+        ;;
+      --grype-args=*)
+        # Extract the value after --tool-arg= and append it to var2
+        arg="${1#*=}"
+        grype_args="${grype_args} ${arg}"
+        ;;
+      *)
+        arg="${1#*=}"
+        log_warning "The following unknown arg has been passed to pre-commit-grype hook: \"${arg}\""
+        ;;
+    esac
+    shift
+  done
+
+  echo ${grype_args} | sed 's/^ *//'
 }

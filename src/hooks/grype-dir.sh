@@ -14,13 +14,7 @@ UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 . "${UTILS_DIR_PATH}/logging.sh"
 
 grype_dir() {
-  hook_args=$(parse_args_hook "$@" | xargs)
-  grype_args="dir:. $(parse_args_grype "$@" | xargs)"
-  unknown_args=$(parse_args_unknown "$@" | xargs)
-
-  if [ "${unknown_args}" != "" ]; then
-    log_warning "The following unknown args have been passed to pre-commit-grype hook: \"${unknown_args}\""
-  fi
+  grype_args=$(parse_args "$@")
 
   res=$(install)
   to_uninstall=$(echo "${res}" | cut -d ':' -f 1)
