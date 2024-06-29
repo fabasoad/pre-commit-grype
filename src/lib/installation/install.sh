@@ -1,12 +1,5 @@
 #!/usr/bin/env sh
 
-#MAIN_SCRIPT_PATH=$(realpath "$0")
-#SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
-#LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
-#UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
-#
-#. "${UTILS_DIR_PATH}/logging.sh"
-
 log_debug_installed() {
   grype_path="$1"
   if [ "$2" = "false" ]; then
