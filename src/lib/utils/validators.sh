@@ -22,3 +22,7 @@ validate_enum() {
       ;;
   esac
 }
+
+validate_log_level() {
+  validate_enum "--log-level" "$1" "off,debug,info,warning,error"
+}

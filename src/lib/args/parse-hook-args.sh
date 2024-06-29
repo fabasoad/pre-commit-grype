@@ -10,7 +10,7 @@ UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 
 _set_log_level() {
   log_level="$1"
-  is_valid=$(validate_enum "--log-level" "${log_level}" "off,debug,info,warning,error")
+  is_valid=$(validate_log_level "${log_level}")
   if [ "${is_valid}" = "true" ]; then
     GLOB_LOG_LEVEL="${log_level}"
   fi
@@ -44,7 +44,7 @@ parse_hook_args() {
           args_str=$(_set_param "log_level" "${args_str}" " ")
           ;;
         *)
-          log_warning "Unknown $1 argument has been passed as --hook-args"
+          log_warning "Unknown ${args_str} argument has been passed as --hook-args"
           ;;
       esac
       shift

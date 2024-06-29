@@ -8,6 +8,8 @@ log() {
   printf "%s %s level=%s %s\n" "$prefix" "$(date +'%Y-%m-%d %T')" "$level" "$msg" >&2
 }
 
+log_off() {}
+
 log_debug() {
   if [ "$(is_debug_ok)" = "true" ]; then
     log "debug" "$1"
