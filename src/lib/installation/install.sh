@@ -16,12 +16,11 @@ install() {
   if command -v grype &> /dev/null; then
     grype_path="$(which grype)"
   else
-    bin_dir="${ROOT_DIR_PATH}/.pre-commit-grype"
-    grype_path="${bin_dir}/grype"
-    mkdir -p "${bin_dir}"
-    if [ ! -d "${bin_dir}" ] || [ ! -f "${grype_path}" ]; then
+    grype_path="${CONFIG_TEMP_BIN_DIR}/grype"
+    mkdir -p "${CONFIG_TEMP_BIN_DIR}"
+    if [ ! -d "${CONFIG_TEMP_BIN_DIR}" ] || [ ! -f "${grype_path}" ]; then
       log_debug "Grype is not found. Downloading latest version..."
-      curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b "${bin_dir}"
+      curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b "${CONFIG_TEMP_BIN_DIR}"
       to_uninstall="true"
     fi
   fi

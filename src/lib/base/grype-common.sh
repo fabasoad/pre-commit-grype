@@ -24,6 +24,6 @@ grype_common() {
     log_warning "${msg}"
   fi
 
-  try_uninstall "$(dirname ${grype_path})" "${to_uninstall}"
+  try_uninstall "${CONFIG_TEMP_DIR}" "${to_uninstall}"
   exit "${grype_exit_code}"
 }

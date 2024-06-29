@@ -4,8 +4,11 @@ _set_param() {
   set_param_func_name="set_global_$1"
   args_str="$2"
   delimiter="$3"
+  # Removing param key, such as "--log-level"
   args_str=$(echo "${args_str}" | cut -d "${delimiter}" -f 2-)
+  # Taking param value, such as "debug"
   param_val=$(echo "${args_str}" | cut -d ' ' -f 1 | sed 's/^ *//')
+  # Saving leftover
   args_str=$(echo "${args_str}" | cut -d ' ' -f 2- | sed 's/^ *//')
   ${set_param_func_name} "${param_val}"
   if [ "${param_val}" = "${args_str}" ]; then

@@ -16,8 +16,21 @@ validate_enum() {
   esac
 }
 
-validate_log_level() {
+_validate_log_level() {
+  param_key="${1}"
+  param_val="${2}"
+  log_level="${3:-warning}"
+  validate_enum "${param_key}" "${param_val}" "${CONFIG_LOG_LEVEL_OPTIONS}" "${log_level}"
+}
+
+validate_log_level_param() {
   param_val="${1}"
-  log_level="${2:warning}"
-  validate_enum "--log-level" "${param_val}" "off,debug,info,warning,error" "${log_level}"
+  log_level="${2:-warning}"
+  _validate_log_level "--log-level" "${param_val}" "${log_level}"
+}
+
+validate_log_level_global_var() {
+  param_val="${1}"
+  log_level="${2:-warning}"
+  _validate_log_level "PRE_COMMIT_GRYPE_LOG_LEVEL" "${param_val}" "${log_level}"
 }
