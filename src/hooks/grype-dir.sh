@@ -9,5 +9,5 @@ set -u
 #. "${BASE_DIR_PATH}/grype-common.sh"
 
 grype_dir() {
-  grype_common "dir:." "$@"
+  grype_common "dir:. $@"
 }

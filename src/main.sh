@@ -24,20 +24,26 @@ main() {
   verify_global_vars
 
   cmd_grype_dir="grype-dir"
-  cmd_actual="$1"
 
+  cmd_actual="$1"
   shift
-  if [ "${cmd_actual}" = "${cmd_grype_dir}" ]; then
-    grype_dir "$(echo "$@" | sed 's/^ *//')"
-  else
-    is_valid=$(validate_enum "hook" "${cmd_actual}" "${cmd_grype_dir}" "error")
-    if [ "${is_valid}" = "false" ]; then
-      exit 1
-    else
-      log_error "Something went wrong"
-      exit 1
-    fi
-  fi
+
+  grype_args="$(parse_all_args "$(echo "$@" | sed 's/^ *//')")"
+
+  case "${cmd_actual}" in
+    "${cmd_grype_dir}")
+      grype_dir "${grype_args}"
+      ;;
+    *)
+      is_valid=$(validate_enum "hook" "${cmd_actual}" "${cmd_grype_dir}" "error")
+      if [ "${is_valid}" = "false" ]; then
+        exit 1
+      else
+        log_error "Something went wrong"
+        exit 1
+      fi
+      ;;
+  esac
 }
 
 main "$@"

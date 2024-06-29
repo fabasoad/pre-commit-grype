@@ -14,9 +14,7 @@ set -u
 #. "${UTILS_DIR_PATH}/logging.sh"
 
 grype_common() {
-  cmd="$1"
-  shift
-  grype_args="${cmd} $(parse_all_args "$@")"
+  grype_args="$@"
 
   res=$(install)
   to_uninstall=$(echo "${res}" | cut -d ':' -f 1)
@@ -33,9 +31,9 @@ grype_common() {
   set -e
   msg="Grype exit code: ${grype_exit_code}"
   if [ "${grype_exit_code}" = "0" ]; then
-    log_info "Grype exit code: ${grype_exit_code}"
+    log_info "${msg}"
   else
-    log_warning "Grype exit code: ${grype_exit_code}"
+    log_warning "${msg}"
   fi
 
   try_uninstall "$(dirname ${grype_path})" "${to_uninstall}"
