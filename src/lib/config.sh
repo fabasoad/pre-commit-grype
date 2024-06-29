@@ -2,7 +2,8 @@
 
 CONFIG_LOG_LEVEL_DEFAULT_VAL="info"
 CONFIG_LOG_LEVEL_OPTIONS="off,debug,info,warning,error"
-CONFIG_TEMP_DIR="$(pwd)/.pre-commit-grype"
+CONFIG_TEMP_DIR_NAME=".pre-commit-grype"
+CONFIG_TEMP_DIR="$(pwd)/${CONFIG_TEMP_DIR_NAME}"
 CONFIG_TEMP_BIN_DIR="${CONFIG_TEMP_DIR}/bin"
 CONFIG_TEMP_PROPS_DIR="${CONFIG_TEMP_DIR}/props"
 
