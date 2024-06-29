@@ -24,5 +24,7 @@ validate_enum() {
 }
 
 validate_log_level() {
-  validate_enum "--log-level" "$1" "off,debug,info,warning,error"
+  param_val="${1}"
+  log_level="${2:warning}"
+  validate_enum "--log-level" "${param_val}" "off,debug,info,warning,error" "${log_level}"
 }

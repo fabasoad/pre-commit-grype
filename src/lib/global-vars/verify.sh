@@ -7,7 +7,7 @@ GLOBAL_VARS_DIR_PATH="${LIB_DIR_PATH}/global-vars"
 UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 
 . "${GLOBAL_VARS_DIR_PATH}/default.sh"
-. "${GLOBAL_VARS_DIR_PATH}/set.sh"
+. "${GLOBAL_VARS_DIR_PATH}/modifiers.sh"
 . "${UTILS_DIR_PATH}/logging.sh"
 . "${UTILS_DIR_PATH}/validators.sh"
 

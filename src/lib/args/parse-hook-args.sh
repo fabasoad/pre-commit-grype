@@ -3,18 +3,12 @@
 MAIN_SCRIPT_PATH=$(realpath "$0")
 SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
 LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
+GLOBAL_VARS_DIR_PATH="${LIB_DIR_PATH}/global-vars"
 UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 
+. "${GLOBAL_VARS_DIR_PATH}/modifiers.sh"
 . "${UTILS_DIR_PATH}/logging.sh"
 . "${UTILS_DIR_PATH}/validators.sh"
-
-_set_log_level() {
-  log_level="$1"
-  is_valid=$(validate_log_level "${log_level}")
-  if [ "${is_valid}" = "true" ]; then
-    GLOB_LOG_LEVEL="${log_level}"
-  fi
-}
 
 _set_param() {
   param_name="$1"
@@ -23,7 +17,7 @@ _set_param() {
   args_str=$(echo "${args_str}" | cut -d "${delimiter}" -f 2-)
   param_val=$(echo "${args_str}" | cut -d ' ' -f 1 | sed 's/^ *//')
   args_str=$(echo "${args_str}" | cut -d ' ' -f 2- | sed 's/^ *//')
-  _set_${param_name} "${param_val}"
+  set_global_${param_name} "${param_val}"
   if [ "${param_val}" = "${args_str}" ]; then
     echo ""
   else
