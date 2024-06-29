@@ -6,7 +6,7 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 ARGS_DIR_PATH="${LIB_DIR_PATH}/args"
 UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 
-. "${ARGS_DIR_PATH}/apply-hook-arg.sh"
+. "${ARGS_DIR_PATH}/parse-hook-args.sh"
 . "${UTILS_DIR_PATH}/logging.sh"
 
 parse_all_args() {
@@ -50,9 +50,8 @@ parse_all_args() {
   done
 
   hook_args=$(echo "${hook_args}" | sed 's/^ *//')
+  parse_hook_args "${hook_args}"
+
   grype_args=$(echo "${grype_args}" | sed 's/^ *//')
-  if [ -n "${hook_args}" ]; then
-    log_info "Pre-commit hook arguments: ${hook_args}"
-  fi
   echo "${grype_args}"
 }
