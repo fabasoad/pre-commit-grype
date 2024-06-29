@@ -9,24 +9,39 @@ UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
 . "${UTILS_DIR_PATH}/validators.sh"
 
 _set_log_level() {
-  val="$1"
-  is_valid=$(validate_enum "--log-level" "${val}" "off,debug,info,warning,error")
+  log_level="$1"
+  is_valid=$(validate_enum "--log-level" "${log_level}" "off,debug,info,warning,error")
   if [ "${is_valid}" = "true" ]; then
-    GLOB_LOG_LEVEL="${val}"
+    GLOB_LOG_LEVEL="${log_level}"
+  fi
+}
+
+_set_param() {
+  param_name="$1"
+  args_str="$2"
+  delimiter="$3"
+  args_str=$(echo "${args_str}" | cut -d "${delimiter}" -f 2-)
+  param_val=$(echo "${args_str}" | cut -d ' ' -f 1 | sed 's/^ *//')
+  args_str=$(echo "${args_str}" | cut -d ' ' -f 2- | sed 's/^ *//')
+  _set_${param_name} "${param_val}"
+  if [ "${param_val}" = "${args_str}" ]; then
+    echo ""
+  else
+    echo "${args_str}"
   fi
 }
 
 parse_hook_args() {
-  if [ -n "$@" ]; then
-    log_info "Pre-commit hook arguments: $@"
-    while [ $# -gt 0 ]; do
-      case "$1" in
-        --log-level=*)
-          _set_log_level "${1#*=}"
+  args_str="$1"
+  if [ -n "${args_str}" ]; then
+    log_info "Pre-commit hook arguments: ${args_str}"
+    while [ ${#args_str} -gt 0 ]; do
+      case "${args_str}" in
+        "--log-level="*)
+          args_str=$(_set_param "log_level" "${args_str}" "=")
           ;;
-        --log-level)
-          shift
-          _set_log_level "$1"
+        "--log-level "*)
+          args_str=$(_set_param "log_level" "${args_str}" " ")
           ;;
         *)
           log_warning "Unknown $1 argument has been passed as --hook-args"
