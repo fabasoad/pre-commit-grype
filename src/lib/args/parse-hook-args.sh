@@ -17,7 +17,6 @@ _set_param() {
   args_str=$(echo "${args_str}" | cut -d "${delimiter}" -f 2-)
   param_val=$(echo "${args_str}" | cut -d ' ' -f 1 | sed 's/^ *//')
   args_str=$(echo "${args_str}" | cut -d ' ' -f 2- | sed 's/^ *//')
-  log_info ""
   ${set_param_func_name} "${param_val}"
   if [ "${param_val}" = "${args_str}" ]; then
     echo ""

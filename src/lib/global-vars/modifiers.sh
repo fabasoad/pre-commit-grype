@@ -20,9 +20,11 @@ get_global_log_level() {
 }
 
 set_global_log_level() {
+  log_info "1. SET GLOBAL TO $1"
   log_level="$1"
   is_valid=$(validate_log_level "${log_level}")
   if [ "${is_valid}" = "true" ]; then
+    log_info "2. SET GLOBAL TO $1"
     export PRE_COMMIT_GRYPE_LOG_LEVEL="${log_level}"
   fi
 }
