@@ -11,13 +11,14 @@
 #. "${UTILS_DIR_PATH}/validators.sh"
 
 _set_param() {
-  param_name="$1"
+  set_param_func_name="set_global_$1"
   args_str="$2"
   delimiter="$3"
   args_str=$(echo "${args_str}" | cut -d "${delimiter}" -f 2-)
   param_val=$(echo "${args_str}" | cut -d ' ' -f 1 | sed 's/^ *//')
   args_str=$(echo "${args_str}" | cut -d ' ' -f 2- | sed 's/^ *//')
-  set_global_${param_name} "${param_val}"
+  log_info ""
+  ${set_param_func_name} "${param_val}"
   if [ "${param_val}" = "${args_str}" ]; then
     echo ""
   else
