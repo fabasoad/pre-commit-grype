@@ -2,7 +2,7 @@
 set -u
 
 grype_common() {
-  grype_args="$@"
+  grype_args="$@ --exclude=${CONFIG_TEMP_DIR}"
 
   grype_path=$(install)
   grype_version=$(${grype_path} --version | cut -d ' ' -f 2)
