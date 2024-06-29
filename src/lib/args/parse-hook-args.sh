@@ -20,8 +20,8 @@ _set_param() {
 
 parse_hook_args() {
   args_str="$1"
+  orig_str="${args_str}"
   if [ -n "${args_str}" ]; then
-    log_info "Pre-commit hook arguments: ${args_str}"
     while [ ${#args_str} -gt 0 ]; do
       case "${args_str}" in
         "--log-level="*)
@@ -37,4 +37,5 @@ parse_hook_args() {
       shift
     done
   fi
+  log_info "Pre-commit hook arguments: ${orig_str}"
 }

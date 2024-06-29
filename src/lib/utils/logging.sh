@@ -3,7 +3,6 @@
 _is_debug_ok() {
   # ok: debug
   # not ok: off, info, warning, error
-  log_info "LOG LEVEL: $(get_global_log_level)"
   if [ "$(get_global_log_level)" = "debug" ]; then
     echo "true"
   else
