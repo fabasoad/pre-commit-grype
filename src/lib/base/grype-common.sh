@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 set -u
 
-MAIN_SCRIPT_PATH=$(realpath "$0")
-SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
-LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
-ARGS_DIR_PATH="${LIB_DIR_PATH}/args"
-INSTALLATION_DIR_PATH="${LIB_DIR_PATH}/installation"
-UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
-
-. "${ARGS_DIR_PATH}/parse-all-args.sh"
-. "${INSTALLATION_DIR_PATH}/install.sh"
-. "${INSTALLATION_DIR_PATH}/uninstall.sh"
-. "${UTILS_DIR_PATH}/logging.sh"
+#MAIN_SCRIPT_PATH=$(realpath "$0")
+#SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
+#LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
+#ARGS_DIR_PATH="${LIB_DIR_PATH}/args"
+#INSTALLATION_DIR_PATH="${LIB_DIR_PATH}/installation"
+#UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
+#
+#. "${ARGS_DIR_PATH}/parse-all-args.sh"
+#. "${INSTALLATION_DIR_PATH}/install.sh"
+#. "${INSTALLATION_DIR_PATH}/uninstall.sh"
+#. "${UTILS_DIR_PATH}/logging.sh"
 
 grype_common() {
   cmd="$1"

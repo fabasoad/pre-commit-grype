@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-MAIN_SCRIPT_PATH=$(realpath "$0")
-SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
-LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
-ARGS_DIR_PATH="${LIB_DIR_PATH}/args"
-UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
-
-. "${ARGS_DIR_PATH}/parse-hook-args.sh"
-. "${UTILS_DIR_PATH}/logging.sh"
+#MAIN_SCRIPT_PATH=$(realpath "$0")
+#SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
+#LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
+#ARGS_DIR_PATH="${LIB_DIR_PATH}/args"
+#UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
+#
+#. "${ARGS_DIR_PATH}/parse-hook-args.sh"
+#. "${UTILS_DIR_PATH}/logging.sh"
 
 parse_all_args() {
   grype_args=""

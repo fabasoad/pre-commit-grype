@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
 
-MAIN_SCRIPT_PATH=$(realpath "$0")
-SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
-LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
-GLOBAL_VARS_DIR_PATH="${LIB_DIR_PATH}/global-vars"
-
-. "${GLOBAL_VARS_DIR_PATH}/modifiers.sh"
+#MAIN_SCRIPT_PATH=$(realpath "$0")
+#SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
+#LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
+#GLOBAL_VARS_DIR_PATH="${LIB_DIR_PATH}/global-vars"
+#
+#. "${GLOBAL_VARS_DIR_PATH}/modifiers.sh"
 
 log() {
   prefix="[pre-commit-grype]"

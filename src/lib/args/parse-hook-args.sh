@@ -1,14 +1,14 @@
 #!/usr/bin/env sh
 
-MAIN_SCRIPT_PATH=$(realpath "$0")
-SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
-LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
-GLOBAL_VARS_DIR_PATH="${LIB_DIR_PATH}/global-vars"
-UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
-
-. "${GLOBAL_VARS_DIR_PATH}/modifiers.sh"
-. "${UTILS_DIR_PATH}/logging.sh"
-. "${UTILS_DIR_PATH}/validators.sh"
+#MAIN_SCRIPT_PATH=$(realpath "$0")
+#SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
+#LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
+#GLOBAL_VARS_DIR_PATH="${LIB_DIR_PATH}/global-vars"
+#UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
+#
+#. "${GLOBAL_VARS_DIR_PATH}/modifiers.sh"
+#. "${UTILS_DIR_PATH}/logging.sh"
+#. "${UTILS_DIR_PATH}/validators.sh"
 
 _set_param() {
   param_name="$1"
