@@ -11,7 +11,7 @@
 # Import all scripts
 import_all() {
   current_file=$(basename "$0")
-  sh_files=$(find . -type f -name "*.sh")
+  sh_files=$(find "$(dirname "$(realpath "$0")")" -type f -name "*.sh")
   for file in $sh_files; do
     if [ "$(basename "${file}")" != "${current_file}" ]; then
       . "${file}"
