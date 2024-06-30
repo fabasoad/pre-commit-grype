@@ -1,17 +1,10 @@
 #!/usr/bin/env sh
 
-MAIN_SCRIPT_PATH=$(realpath "$0")
-SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
-LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
-UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
-
-. "${UTILS_DIR_PATH}/logging.sh"
-
 validate_enum() {
   param_key="$1"
   param_val="$2"
   enum_opts="$3,"
-  log_level="${4:warning}"
+  log_level="${4:-warning}"
   case ",${enum_opts}" in
     *",${param_val},"*)
       echo "true"
@@ -21,4 +14,23 @@ validate_enum() {
       echo "false"
       ;;
   esac
+}
+
+_validate_log_level() {
+  param_key="${1}"
+  param_val="${2}"
+  log_level="${3:-warning}"
+  validate_enum "${param_key}" "${param_val}" "${CONFIG_LOG_LEVEL_OPTIONS}" "${log_level}"
+}
+
+validate_log_level_param() {
+  param_val="${1}"
+  log_level="${2:-warning}"
+  _validate_log_level "--log-level" "${param_val}" "${log_level}"
+}
+
+validate_log_level_global_var() {
+  param_val="${1}"
+  log_level="${2:-warning}"
+  _validate_log_level "PRE_COMMIT_GRYPE_LOG_LEVEL" "${param_val}" "${log_level}"
 }
