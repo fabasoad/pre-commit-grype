@@ -1,12 +1,14 @@
 #!/usr/bin/env sh
 
+# Gets log level. Precedence:
+# (1) Parameter defined via --hook-args, i.e. value saved to temporary directory
+# (2) Environment variable
+# (3) Default value
 get_global_log_level() {
   set +u
-  if [ -z "${PRE_COMMIT_GRYPE_LOG_LEVEL}" ]; then
-    get_prop "PRE_COMMIT_GRYPE_LOG_LEVEL" "${CONFIG_LOG_LEVEL_DEFAULT_VAL}" | sed 's/^ *//'
-  else
-    echo "${PRE_COMMIT_GRYPE_LOG_LEVEL}"
-  fi
+  get_prop "PRE_COMMIT_GRYPE_LOG_LEVEL" \
+    "${PRE_COMMIT_GRYPE_LOG_LEVEL:-${CONFIG_LOG_LEVEL_DEFAULT_VAL}}" \
+    | sed 's/^ *//'
   set -u
 }
 

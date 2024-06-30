@@ -24,10 +24,10 @@ parse_hook_args() {
     orig_str="${args_str}"
     while [ ${#args_str} -gt 0 ]; do
       case "${args_str}" in
-        "--log-level="*)
+        "${CONFIG_LOG_LEVEL_ARG_NAME}="*)
           args_str=$(_set_param "log_level" "${args_str}" "=")
           ;;
-        "--log-level "*)
+        "${CONFIG_LOG_LEVEL_ARG_NAME} "*)
           args_str=$(_set_param "log_level" "${args_str}" " ")
           ;;
         *)

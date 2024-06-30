@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 set -u
 
 grype_common() {
@@ -22,5 +22,5 @@ grype_common() {
   fi
 
   uninstall "${CONFIG_TEMP_DIR}"
-  exit "${grype_exit_code}"
+  exit ${grype_exit_code}
 }

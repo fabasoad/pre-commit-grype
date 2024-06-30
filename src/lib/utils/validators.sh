@@ -26,7 +26,7 @@ _validate_log_level() {
 validate_log_level_param() {
   param_val="${1}"
   log_level="${2:-warning}"
-  _validate_log_level "--log-level" "${param_val}" "${log_level}"
+  _validate_log_level "${CONFIG_LOG_LEVEL_ARG_NAME}" "${param_val}" "${log_level}"
 }
 
 validate_log_level_global_var() {
