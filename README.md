@@ -10,6 +10,7 @@
 ## Table of Contents
 
 - [How it works?](#how-it-works)
+- [Prerequisites](#prerequisites)
 - [Hooks](#hooks)
   - [grype-dir](#grype-dir)
 - [Customization](#customization)
@@ -25,6 +26,14 @@
 At first hook tries to use globally installed `grype` tool. And if it doesn't exist
 then hook installs `grype` into a `.pre-commit-grype` temporary directory that
 will be removed after scanning is completed.
+
+## Prerequisites
+
+The following tools have to be available on a runner prior using this pre-commit
+hook:
+
+- [bash >=4.0](https://www.gnu.org/software/bash/)
+- [curl](https://curl.se/)
 
 ## Hooks
 
@@ -196,4 +205,17 @@ repos:
           - --grype-args --fail-on=low
           - --grype-args --exclude **/.yarn
           - --grype-args=--exclude **/node_modules
+```
+
+Set these parameters to have the minimal possible logs output:
+
+```yaml
+repos:
+  - repo: https://github.com/fabasoad/pre-commit-grype
+    rev: <rev>
+    hooks:
+      - id: grype-dir
+        args:
+          - --hook-args --log-level=off
+          - --grype-args --quiet
 ```
