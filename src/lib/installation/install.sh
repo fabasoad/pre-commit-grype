@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 install() {
-  log_debug "Grype installation started"
+  log_debug "Verifying Grype installation"
   if command -v grype &> /dev/null; then
     grype_path="$(which grype)"
     log_debug "Grype is found at ${grype_path}. Installation skipped"

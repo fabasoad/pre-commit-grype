@@ -1,15 +1,7 @@
-#!/usr/bin/env sh
-
-#MAIN_SCRIPT_PATH=$(realpath "$0")
-#SRC_DIR_PATH=$(dirname "${MAIN_SCRIPT_PATH}")
-#HOOKS_DIR_PATH="${SRC_DIR_PATH}/hooks"
-#LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
-#ARGS_DIR_PATH="${LIB_DIR_PATH}/args"
-#GLOBAL_VARS_DIR_PATH="${LIB_DIR_PATH}/global-vars"
-#UTILS_DIR_PATH="${LIB_DIR_PATH}/utils"
+#!/usr/bin/env bash
 
 # Import all scripts
-import_all() {
+_import_all() {
   current_file=$(basename "$0")
   sh_files=$(find "$(dirname "$(realpath "$0")")" -type f -name "*.sh")
   for file in $sh_files; do
@@ -20,19 +12,22 @@ import_all() {
 }
 
 main() {
-  import_all
-  verify_global_vars
+  _import_all
 
   cmd_grype_dir="grype-dir"
 
   cmd_actual="$1"
   shift
 
-  grype_args="$(parse_all_args "$(echo "$@" | sed 's/^ *//')")"
+  declare -A args_map
+  parse_all_args args_map "$(echo "$@" | sed 's/^ *//' | sed 's/ *$//')"
+  parse_hook_args "${args_map["hook-args"]}"
+
+  verify_global_vars
 
   case "${cmd_actual}" in
     "${cmd_grype_dir}")
-      grype_dir "${grype_args}"
+      grype_dir "${args_map["grype-args"]}"
       ;;
     *)
       is_valid=$(validate_enum "hook" "${cmd_actual}" "${cmd_grype_dir}" "error")

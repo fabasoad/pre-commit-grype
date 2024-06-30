@@ -10,12 +10,15 @@
 ## Table of Contents
 
 - [How it works?](#how-it-works)
+- [Prerequisites](#prerequisites)
 - [Hooks](#hooks)
   - [grype-dir](#grype-dir)
-- [Arguments](#arguments)
-  - [Grype arguments](#grype-arguments)
-  - [Hook arguments](#hook-arguments)
-    - [--log-level](#--log-level)
+- [Customization](#customization)
+  - [Description](#description)
+  - [Parameters](#parameters)
+    - [Grype](#grype)
+    - [pre-commit-grype](#pre-commit-grype)
+      - [Log level](#log-level)
   - [Examples](#examples)
 
 ## How it works?
@@ -23,6 +26,14 @@
 At first hook tries to use globally installed `grype` tool. And if it doesn't exist
 then hook installs `grype` into a `.pre-commit-grype` temporary directory that
 will be removed after scanning is completed.
+
+## Prerequisites
+
+The following tools have to be available on a runner prior using this pre-commit
+hook:
+
+- [bash >=4.0](https://www.gnu.org/software/bash/)
+- [curl](https://curl.se/)
 
 ## Hooks
 
@@ -44,13 +55,21 @@ repos:
       - id: grype-dir
 ```
 
-## Arguments
+## Customization
+
+### Description
+
+There are 2 ways to customize scanning for both `grype` and `pre-commit-grype` -
+environment variables and arguments passed to [args](https://pre-commit.com/#config-args).
 
 You can pass arguments to the hook as well as to the `grype` itself. To distinguish
 parameters you need to use `--grype-args` for `grype` arguments and `--hook-args`
-for hook arguments. Please find [Examples](#examples) for more details.
+for `pre-commit-grype` arguments. Supported delimiter is `=`. So, use `--hook-args=<arg>`
+but not `--hook-args <arg>`. Please find [Examples](#examples) for more details.
 
-### Grype arguments
+### Parameters
+
+#### Grype
 
 You can install `grype` locally and run `grype --help` to see all the available
 arguments:
@@ -123,14 +142,25 @@ Use "grype [command] --help" for more information about a command.
 
 <!-- markdownlint-enable MD013 -->
 
-### Hook arguments
+#### pre-commit-grype
 
-#### `--log-level`
+Here is the precedence order of `pre-commit-grype` tool:
 
-With this parameter you can control the log level of pre-commit hook output. It
-doesn't impact `grype` log level output. To control `grype` log level output please
-look at the [Grype arguments](#grype-arguments) section.
+- Parameter passed to the hook as argument via `--hook-args`.
+- Environment variable.
+- Default value.
 
+For example, if you set `PRE_COMMIT_GRYPE_LOG_LEVEL=off` and `--hook-args=--log-level
+debug` then `debug` value will be used.
+
+##### Log level
+
+With this parameter you can control the log level of `pre-commit-grype` hook output.
+It doesn't impact `grype` log level output. To control `grype` log level output
+please look at the [Grype parameters](#grype).
+
+- Parameter name: `--log-level`
+- Environment variable: `PRE_COMMIT_GRYPE_LOG_LEVEL`
 - Possible values: `debug`, `info`, `warning`, `error`, `off`
 - Default: `info`
 
@@ -163,7 +193,7 @@ repos:
           - --grype-args=--fail-on low --by-cve
 ```
 
-`=` as well as `` (space) is supported as delimiter:
+Set these parameters to have the minimal possible logs output:
 
 ```yaml
 repos:
@@ -172,6 +202,6 @@ repos:
     hooks:
       - id: grype-dir
         args:
-          - --hook-args=--log-level=debug
-          - --grype-args=--fail-on=low --exclude **/node_modules
+          - --hook-args=--log-level=off
+          - --grype-args=--quiet
 ```

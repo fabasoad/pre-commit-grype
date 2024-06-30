@@ -12,16 +12,25 @@ repos:
     rev: v8.18.4
     hooks:
       - id: gitleaks
-  #  - repo: https://github.com/fabasoad/pre-commit-grype
-  #    rev: v0.2.0
-  #    hooks:
-  #      - id: grype-dir
-  #        stages: ["push"]
+  - repo: https://github.com/fabasoad/pre-commit-grype
+    rev: v0.3.1
+    hooks:
+      - id: grype-dir
+        args:
+          - --hook-args=--log-level debug
+        stages: ["push"]
   # Markdown
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.41.0
     hooks:
       - id: markdownlint-fix
+        stages: ["commit"]
+  # Shell
+  - repo: https://github.com/openstack/bashate
+    rev: 2.1.1
+    hooks:
+      - id: bashate
+        args: ["-i", "E003,E006"]
         stages: ["commit"]
   # Yaml
   - repo: https://github.com/adrienverge/yamllint

@@ -7,7 +7,7 @@ _verify_log_level() {
   if [ "${is_valid}" = "false" ]; then
     msg="\"${env_var_name}\" environment variable is invalid (\"${env_var_val}\")."
     msg="${msg} Possible values: $(echo "${CONFIG_LOG_LEVEL_OPTIONS%,}" | sed 's/,/, /g')."
-    msg="${msg} Setting back to default value: \"${CONFIG_LOG_LEVEL_DEFAULT_VAL}\"."
+    msg="${msg} Resetting to default value: \"${CONFIG_LOG_LEVEL_DEFAULT_VAL}\"."
     log_warning "${msg}"
     reset_global_log_level
   fi

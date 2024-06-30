@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
 parse_all_args() {
-  grype_args=""
-  hook_args=""
+  local -n map_ref=$1
+  shift
+
+  map_ref["grype-args"]=""
+  map_ref["hook-args"]=""
+
   curr_flag=""
 
   args="$@"
@@ -11,19 +15,19 @@ parse_all_args() {
   while [[ -n "${args}" ]]; do
     case "$(echo "${args}" | cut -d '=' -f 1)" in
       --hook-args)
-        args="${args#*=}"
+        args=$(echo "${args#*=}" | sed 's/^ *//')
         curr_flag="hook"
         ;;
       --grype-args)
-        args="${args#*=}"
+        args=$(echo "${args#*=}" | sed 's/^ *//')
         curr_flag="grype"
         ;;
       *)
         arg=$(echo "${args}" | cut -d ' ' -f 1)
         if [ "${curr_flag}" = "hook" ]; then
-          hook_args="${hook_args} ${arg}"
+          map_ref["hook-args"]="${map_ref["hook-args"]} ${arg}"
         elif [ "${curr_flag}" = "grype" ]; then
-          grype_args="${grype_args} ${arg}"
+          map_ref["grype-args"]="${map_ref["grype-args"]} ${arg}"
         else
           msg="Invalid format of the following argument: \"${arg}\". Please use"
           msg="${msg} --hook-args to pass args to pre-commit hook or --grype-args"
@@ -32,7 +36,7 @@ parse_all_args() {
           exit 1
         fi
 
-        args=$(echo "${args}" | cut -d ' ' -f 2-)
+        args=$(echo "${args}" | cut -d ' ' -f 2- | sed 's/^ *//')
         if [ "${arg}" = "${args}" ]; then
           args=""
         fi
@@ -40,9 +44,9 @@ parse_all_args() {
     esac
   done
 
-  hook_args=$(echo "${hook_args}" | sed 's/^ *//')
-  parse_hook_args "${hook_args}"
-
-  grype_args=$(echo "${grype_args}" | sed 's/^ *//')
-  echo "${grype_args}"
+  # Removing leading space is needed here because we concatenate string in a loop
+  # and we start with a empty string. So, first iteration is empty string + space
+  # + next value. Here we remove that empty string from the beginning
+  map_ref["hook-args"]=$(echo "${map_ref["hook-args"]}" | sed 's/^ *//')
+  map_ref["grype-args"]=$(echo "${map_ref["grype-args"]}" | sed 's/^ *//')
 }

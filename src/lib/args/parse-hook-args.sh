@@ -7,9 +7,9 @@ _set_param() {
   # Removing param key, such as "--log-level"
   args_str=$(echo "${args_str}" | cut -d "${delimiter}" -f 2-)
   # Taking param value, such as "debug"
-  param_val=$(echo "${args_str}" | cut -d ' ' -f 1 | sed 's/^ *//')
+  param_val=$(echo "${args_str}" | cut -d ' ' -f 1)
   # Saving leftover
-  args_str=$(echo "${args_str}" | cut -d ' ' -f 2- | sed 's/^ *//')
+  args_str=$(echo "${args_str}" | cut -d ' ' -f 2-)
   ${set_param_func_name} "${param_val}"
   if [ "${param_val}" = "${args_str}" ]; then
     echo ""
@@ -24,10 +24,10 @@ parse_hook_args() {
     orig_str="${args_str}"
     while [ ${#args_str} -gt 0 ]; do
       case "${args_str}" in
-        "--log-level="*)
+        "${CONFIG_LOG_LEVEL_ARG_NAME}="*)
           args_str=$(_set_param "log_level" "${args_str}" "=")
           ;;
-        "--log-level "*)
+        "${CONFIG_LOG_LEVEL_ARG_NAME} "*)
           args_str=$(_set_param "log_level" "${args_str}" " ")
           ;;
         *)
