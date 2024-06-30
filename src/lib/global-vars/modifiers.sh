@@ -6,9 +6,12 @@
 # (3) Default value
 get_global_log_level() {
   set +u
+  # Removing trailing and leading spaces is needed here to be sure to have a correct
+  # value retrieved from environment variable in case user sets it incorrectly
+  # (with spaces)
   get_prop "PRE_COMMIT_GRYPE_LOG_LEVEL" \
     "${PRE_COMMIT_GRYPE_LOG_LEVEL:-${CONFIG_LOG_LEVEL_DEFAULT_VAL}}" \
-    | sed 's/^ *//'
+    | sed 's/^ *//' | sed 's/ *$//'
   set -u
 }
 

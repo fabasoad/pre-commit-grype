@@ -15,11 +15,11 @@ parse_all_args() {
   while [[ -n "${args}" ]]; do
     case "$(echo "${args}" | cut -d '=' -f 1)" in
       --hook-args)
-        args="${args#*=}"
+        args=$(echo "${args#*=}" | sed 's/^ *//')
         curr_flag="hook"
         ;;
       --grype-args)
-        args="${args#*=}"
+        args=$(echo "${args#*=}" | sed 's/^ *//')
         curr_flag="grype"
         ;;
       *)
@@ -36,7 +36,7 @@ parse_all_args() {
           exit 1
         fi
 
-        args=$(echo "${args}" | cut -d ' ' -f 2-)
+        args=$(echo "${args}" | cut -d ' ' -f 2- | sed 's/^ *//')
         if [ "${arg}" = "${args}" ]; then
           args=""
         fi
@@ -44,6 +44,9 @@ parse_all_args() {
     esac
   done
 
+  # Removing leading space is needed here because we concatenate string in a loop
+  # and we start with a empty string. So, first iteration is empty string + space
+  # + next value. Here we remove that empty string from the beginning
   map_ref["hook-args"]=$(echo "${map_ref["hook-args"]}" | sed 's/^ *//')
   map_ref["grype-args"]=$(echo "${map_ref["grype-args"]}" | sed 's/^ *//')
 }

@@ -64,7 +64,8 @@ environment variables and arguments passed to [args](https://pre-commit.com/#con
 
 You can pass arguments to the hook as well as to the `grype` itself. To distinguish
 parameters you need to use `--grype-args` for `grype` arguments and `--hook-args`
-for `pre-commit-grype` arguments. Please find [Examples](#examples) for more details.
+for `pre-commit-grype` arguments. Supported delimiter is `=`. So, use `--hook-args=<arg>`
+but not `--hook-args <arg>`. Please find [Examples](#examples) for more details.
 
 ### Parameters
 
@@ -192,21 +193,6 @@ repos:
           - --grype-args=--fail-on low --by-cve
 ```
 
-`=` as well as space is supported as delimiter:
-
-```yaml
-repos:
-  - repo: https://github.com/fabasoad/pre-commit-grype
-    rev: <rev>
-    hooks:
-      - id: grype-dir
-        args:
-          - --hook-args=--log-level=debug
-          - --grype-args --fail-on=low
-          - --grype-args --exclude **/.yarn
-          - --grype-args=--exclude **/node_modules
-```
-
 Set these parameters to have the minimal possible logs output:
 
 ```yaml
@@ -216,6 +202,6 @@ repos:
     hooks:
       - id: grype-dir
         args:
-          - --hook-args --log-level=off
-          - --grype-args --quiet
+          - --hook-args=--log-level=off
+          - --grype-args=--quiet
 ```

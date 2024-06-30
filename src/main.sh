@@ -20,7 +20,7 @@ main() {
   shift
 
   declare -A args_map
-  parse_all_args args_map "$(echo "$@" | sed 's/^ *//')"
+  parse_all_args args_map "$(echo "$@" | sed 's/^ *//' | sed 's/ *$//')"
   parse_hook_args "${args_map["hook-args"]}"
 
   verify_global_vars
