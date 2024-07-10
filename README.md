@@ -5,8 +5,6 @@
 ![security](https://github.com/fabasoad/pre-commit-grype/actions/workflows/security.yml/badge.svg)
 ![linting](https://github.com/fabasoad/pre-commit-grype/actions/workflows/linting.yml/badge.svg)
 
-1. [grype-dir](#grype-dir)
-
 ## Table of Contents
 
 - [How it works?](#how-it-works)

@@ -32,7 +32,7 @@ parse_all_args() {
           msg="Invalid format of the following argument: \"${arg}\". Please use"
           msg="${msg} --hook-args to pass args to pre-commit hook or --grype-args"
           msg="${msg} to pass args to grype. For more information go to https://github.com/fabasoad/pre-commit-grype?tab=readme-ov-file"
-          log_error "${msg}"
+          fabasoad_log "error" "${msg}"
           exit 1
         fi
 

@@ -15,14 +15,21 @@ get_global_log_level() {
   set -u
 }
 
+# This function is called by the name dynamically also, such as set_global_${str}
 set_global_log_level() {
+  local -n logs_map_ref=$1
+  shift
+
   log_level="$1"
-  is_valid=$(validate_log_level_param "${log_level}")
+  is_valid=$(validate_log_level_param logs_map_ref "${log_level}")
   if [ "${is_valid}" = "true" ]; then
     save_prop "PRE_COMMIT_GRYPE_LOG_LEVEL" "${log_level}"
   fi
 }
 
 reset_global_log_level() {
-  set_global_log_level "${CONFIG_LOG_LEVEL_DEFAULT_VAL}"
+  local -n logs_map_ref=$1
+  shift
+
+  set_global_log_level logs_map_ref "${CONFIG_LOG_LEVEL_DEFAULT_VAL}"
 }
