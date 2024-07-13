@@ -1,0 +1,57 @@
+---
+name: Test log-level
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/test-logging.yml
+      - scripts/**
+      - src/**
+      - .bpkg.lock
+      - .pre-commit-hooks.yaml
+      - entrypoint.sh
+
+defaults:
+  run:
+    shell: sh
+
+jobs:
+  test-commands:
+    name: Test ${{ matrix.grype-command }} (${{ matrix.log-level-cmd }}, ${{ matrix.log-level-env-var }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        grype-command: ["grype-dir"]
+        include:
+          - log-level-cmd: "debug"
+            log-level-env-var: "info"
+            debug-log-present: "true"
+          - log-level-cmd: "info"
+            log-level-env-var: "debug"
+            debug-log-present: "false"
+    steps:
+      - name: Checkout ${{ github.repository }}
+        uses: actions/checkout@v4
+      - name: Run
+        id: run
+        env:
+          PRE_COMMIT_GRYPE_LOG_LEVEL: "${{ matrix.log-level-env-var }}"
+        run: |
+          logs_file="${RUNNER_TEMP}/$(date +%s).txt"
+          ./entrypoint.sh "${{ matrix.grype-command }}" \
+            "--hook-args=--log-level=${{ matrix.log-level-cmd }}" \
+            2> "${logs_file}"
+          echo "log-file=${logs_file}" >> "$GITHUB_OUTPUT"
+      - name: Validate
+        run: |
+          actual=$(cat "${{ steps.run.outputs.log-file }}" | grep "debug")
+          if [ -z "${actual}" ] && [ "${{ matrix.debug-log-present }}" = "true" ]; then
+            prefix=""
+            if [ "${{ matrix.debug-log-present }}" = "false" ]; then
+              prefix="not "
+            fi
+            msg="Expected debug logs ${prefix}to be present"
+            echo "::error title=Validation error::${msg}"
+            exit 1
+          fi
