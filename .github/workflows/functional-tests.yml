@@ -1,0 +1,31 @@
+---
+name: Functional tests
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/test-logging.yml
+      - scripts/**
+      - src/**
+      - tests/**
+      - .bpkg.lock
+      - entrypoint.sh
+
+defaults:
+  run:
+    shell: sh
+
+jobs:
+  functional-tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout ${{ github.repository }}
+        uses: actions/checkout@v4
+      - name: Run tests
+        run: |
+          test_files=$(find "tests" -type f -perm +111)
+          for test_file in $test_files; do
+            ${test_file}
+          done
