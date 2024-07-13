@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
-root_path=$(dirname $(realpath "$0"))
+ROOT_DIR=$(dirname $(realpath "$0"))
+
 # Install dependencies
-${root_path}/scripts/bpkg-install-packages.sh
+${ROOT_DIR}/scripts/bpkg-install-packages.sh
 # Run hook
-${root_path}/src/main.sh "$@"
+${ROOT_DIR}/src/main.sh "$@"

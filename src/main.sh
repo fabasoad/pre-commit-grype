@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+SRC_DIR=$(dirname $(realpath "$0"))
+
 # Import all scripts
 _import_all() {
-  current_file=$(basename "$0")
-  exec_files=$(find "src" -type f -perm +111)
+  current_file=$(realpath "$0")
+  exec_files=$(find "${SRC_DIR}" -type f -perm +111)
   for file in $exec_files; do
-    if [ "$(basename "${file}")" != "${current_file}" ]; then
+    if [ "${file}" != "${current_file}" ]; then
       . "${file}"
     fi
   done
@@ -28,7 +30,9 @@ main() {
   set +u
   apply_logging_config "${hook_args_map["${CONFIG_LOG_LEVEL_ARG_NAME}"]}"
 
-  fabasoad_log "info" "Pre-commit hook arguments: $(map_to_str hook_args_map)"
+  if [ "${#hook_args_map[@]}" -ne 0 ]; then
+    fabasoad_log "info" "Pre-commit hook arguments: $(map_to_str hook_args_map)"
+  fi
   set -u
 
   case "${cmd_actual}" in
