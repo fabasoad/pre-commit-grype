@@ -34,8 +34,8 @@ main() {
   test_log_level "grype-dir" "info" "debug" "false"
   test_log_level "grype-dir" "debug" "info" "true"
 
-  printf "=%.0s" {1..45}
-  printf "\n[PASS] test-log-level.sh - total 2 tests passed\n"
+  perl -E 'say "-" x 45'
+  echo "[PASS] test-log-level.sh - total 2 tests passed"
 }
 
 main "$@"
