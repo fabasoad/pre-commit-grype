@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
 # Global variables
-
-
 _global_config() {
   export FABASOAD_LOG_CONFIG_TEXT_COLOR="true"
+  export FABASOAD_LOG_CONFIG_DATE_FORMAT="%s"
   export FABASOAD_LOG_CONFIG_OUTPUT_FORMAT="text"
   export FABASOAD_LOG_CONFIG_HEADER="pre-commit-grype"
   export FABASOAD_LOG_CONFIG_LOG_LEVEL="$(get_global_log_level)"
@@ -35,7 +34,7 @@ main() {
   parse_hook_args logs_map "${args_map["hook-args"]}"
 
   # Need to verify parameters that were parsed from hook args
-  verify_global_vars logs_map
+  verify_global_vars
   # Setting global config, such as logging
   _global_config
   # Print logs from map if any
