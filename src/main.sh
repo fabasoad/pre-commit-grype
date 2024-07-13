@@ -28,13 +28,7 @@ main() {
   set +u
   apply_logging_config "${hook_args_map["${CONFIG_LOG_LEVEL_ARG_NAME}"]}"
 
-  if [ "${#hook_args_map[@]}" -ne 0 ]; then
-    hook_args_str=""
-    for key in "${!hook_args_map[@]}"; do
-      hook_args_str="${hook_args_str} ${key}=${hook_args_map[$key]}"
-    done
-    fabasoad_log "info" "Pre-commit hook arguments:${hook_args_str}"
-  fi
+  fabasoad_log "info" "Pre-commit hook arguments: $(map_to_str hook_args_map)"
   set -u
 
   case "${cmd_actual}" in
