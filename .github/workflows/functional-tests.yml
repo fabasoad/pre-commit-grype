@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v4
+      - name: Setup bpkg
+        uses: bpkg/setup-bpkg-action@v1
       - name: Run tests
         run: |
           test_files=$(find "tests" -type f \( -perm -u=x -o -perm -g=x -o -perm -o=x \))
