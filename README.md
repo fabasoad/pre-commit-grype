@@ -4,7 +4,7 @@
 ![GitHub release](https://img.shields.io/github/v/release/fabasoad/pre-commit-grype?include_prereleases)
 ![security](https://github.com/fabasoad/pre-commit-grype/actions/workflows/security.yml/badge.svg)
 ![linting](https://github.com/fabasoad/pre-commit-grype/actions/workflows/linting.yml/badge.svg)
-![test-log-level](https://github.com/fabasoad/pre-commit-grype/actions/workflows/test-log-level.yml/badge.svg)
+![functional-tests](https://github.com/fabasoad/pre-commit-grype/actions/workflows/functional-tests.yml/badge.svg)
 
 ## Table of Contents
 

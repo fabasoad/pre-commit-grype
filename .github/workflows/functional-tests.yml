@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Run tests
         run: |
-          test_files=$(find "tests" -type f -executable)
+          test_files=$(find "tests" -type f \( -perm -u=x -o -perm -g=x -o -perm -o=x \))
           for test_file in $test_files; do
             ${test_file}
           done

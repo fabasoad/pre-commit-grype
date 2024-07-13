@@ -5,7 +5,7 @@ PRE_COMMIT_GRYPE_SRC_DIR=$(dirname $(realpath "$0"))
 # Import all scripts
 _import_all() {
   current_file=$(realpath "$0")
-  exec_files=$(find "${PRE_COMMIT_GRYPE_SRC_DIR}" -type f -perm +111)
+  exec_files=$(find "${PRE_COMMIT_GRYPE_SRC_DIR}" -type f \( -perm -u=x -o -perm -g=x -o -perm -o=x \))
   for file in $exec_files; do
     if [ "${file}" != "${current_file}" ]; then
       . "${file}"
