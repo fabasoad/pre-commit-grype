@@ -28,10 +28,10 @@ main() {
   cmd_actual="$1"
   shift
 
-  declare -A args_map
-  parse_all_args args_map "$(echo "$@" | sed 's/^ *//' | sed 's/ *$//')"
+  declare -A all_args_map
+  parse_all_args all_args_map "$(echo "$@" | sed 's/^ *//' | sed 's/ *$//')"
   declare -A logs_map
-  parse_hook_args logs_map "${args_map["hook-args"]}"
+  parse_hook_args logs_map "${all_args_map["hook-args"]}"
 
   # Need to verify parameters that were parsed from hook args
   verify_global_vars
@@ -44,7 +44,7 @@ main() {
 
   case "${cmd_actual}" in
     "${cmd_grype_dir}")
-      grype_dir "${args_map["grype-args"]}"
+      grype_dir "${all_args_map["grype-args"]}"
       ;;
     *)
       declare -A validation_logs_map
