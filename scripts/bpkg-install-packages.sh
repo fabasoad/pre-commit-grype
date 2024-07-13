@@ -3,6 +3,7 @@
 export PREFIX="$(pwd)/src/.bpkg"
 
 main() {
+  rm -rf "${PREFIX}"
   mkdir -p "${PREFIX}"
   lock_file="./.bpkg.lock"
   while IFS= read -r line; do

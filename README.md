@@ -148,8 +148,8 @@ Here is the precedence order of `pre-commit-grype` tool:
 - Environment variable.
 - Default value.
 
-For example, if you set `PRE_COMMIT_GRYPE_LOG_LEVEL=off` and `--hook-args=--log-level
-debug` then `debug` value will be used.
+For example, if you set `PRE_COMMIT_GRYPE_LOG_LEVEL=warning` and `--hook-args=--log-level
+error` then `error` value will be used.
 
 ##### Log level
 
@@ -159,7 +159,7 @@ please look at the [Grype parameters](#grype).
 
 - Parameter name: `--log-level`
 - Environment variable: `PRE_COMMIT_GRYPE_LOG_LEVEL`
-- Possible values: `debug`, `info`, `warning`, `error`, `off`
+- Possible values: `debug`, `info`, `warning`, `error`
 - Default: `info`
 
 ### Examples
@@ -200,6 +200,6 @@ repos:
     hooks:
       - id: grype-dir
         args:
-          - --hook-args=--log-level=off
+          - --hook-args=--log-level=error
           - --grype-args=--quiet
 ```

@@ -4,22 +4,14 @@ validate_enum() {
   param_key="$1"
   param_val="$2"
   enum_opts="$3,"
-  log_level="${4:-warning}"
   case ",${enum_opts}" in
     *",${param_val},"*)
-      echo "true"
       ;;
     *)
-      echo "false"
+      fabasoad_log "error" "\"${param_key}\" parameter is invalid. Possible values: $(echo "${enum_opts%,}" | sed 's/,/, /g')."
+      exit 1
       ;;
   esac
-}
-
-_validate_log_level() {
-  param_key="${1}"
-  param_val="${2}"
-  log_level="${3:-warning}"
-  validate_enum "${param_key}" "${param_val}" "${CONFIG_LOG_LEVEL_OPTIONS}" "${log_level}"
 }
 
 validate_log_level_param() {
