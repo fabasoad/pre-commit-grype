@@ -19,11 +19,11 @@ test_log_level() {
   actual=$(echo "${output}" | grep "debug")
   if [ -z "${actual}" ] && [ "${debug_expected}" = "true" ]; then
     echo "[FAIL] ${test_name} - debug logs are expected to be present"
-    echo "\n${actual}"
+    echo "\n${output}"
     exit 1
   elif [ -n "${actual}" ] && [ "${debug_expected}" = "false" ]; then
     echo "[FAIL] ${test_name} - debug logs are not expected to be present"
-    echo "\n${actual}"
+    echo "\n${output}"
     exit 1
   fi
 
