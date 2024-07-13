@@ -8,21 +8,21 @@ grype_common() {
 
   grype_path=$(install)
   grype_version=$(${grype_path} --version | cut -d ' ' -f 2)
-  log_info "Grype path: ${grype_path}"
-  log_info "Grype version: ${grype_version}"
-  log_info "Grype arguments: ${grype_args}"
+  fabasoad_log "info" "Grype path: ${grype_path}"
+  fabasoad_log "info" "Grype version: ${grype_version}"
+  fabasoad_log "info" "Grype arguments: ${grype_args}"
 
-  log_debug "Run Grype scanning:"
+  fabasoad_log "debug" "Run Grype scanning:"
   set +e
   ${grype_path} ${grype_args}
   grype_exit_code=$?
   set -e
-  log_debug "Grype scanning completed"
+  fabasoad_log "debug" "Grype scanning completed"
   msg="Grype exit code: ${grype_exit_code}"
   if [ "${grype_exit_code}" = "0" ]; then
-    log_info "${msg}"
+    fabasoad_log "info" "${msg}"
   else
-    log_warning "${msg}"
+    fabasoad_log "warning" "${msg}"
   fi
 
   uninstall "${CONFIG_TEMP_DIR}"

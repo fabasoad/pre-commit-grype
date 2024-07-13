@@ -1,41 +1,41 @@
 #!/usr/bin/env sh
 
-_set_param() {
-  set_param_func_name="set_global_$1"
-  args_str="$2"
-  delimiter="$3"
-  # Removing param key, such as "--log-level"
-  args_str=$(echo "${args_str}" | cut -d "${delimiter}" -f 2-)
-  # Taking param value, such as "debug"
-  param_val=$(echo "${args_str}" | cut -d ' ' -f 1)
-  # Saving leftover
-  args_str=$(echo "${args_str}" | cut -d ' ' -f 2-)
-  ${set_param_func_name} "${param_val}"
-  if [ "${param_val}" = "${args_str}" ]; then
-    echo ""
-  else
-    echo "${args_str}"
-  fi
-}
-
 parse_hook_args() {
+  local -n args_map_ref=$1
+  shift
+
   args_str="$1"
   if [ -n "${args_str}" ]; then
     orig_str="${args_str}"
     while [ ${#args_str} -gt 0 ]; do
+      delimiter=""
       case "${args_str}" in
         "${CONFIG_LOG_LEVEL_ARG_NAME}="*)
-          args_str=$(_set_param "log_level" "${args_str}" "=")
+          delimiter="="
           ;;
         "${CONFIG_LOG_LEVEL_ARG_NAME} "*)
-          args_str=$(_set_param "log_level" "${args_str}" " ")
+          delimiter=" "
           ;;
         *)
-          log_warning "Unknown ${args_str} argument has been passed as --hook-args"
+          fabasoad_log "error" "Unknown \"${args_str}\" argument has been passed to --hook-args"
+          exit 1
           ;;
       esac
-      shift
+
+      # Removing param key, such as "--log-level"
+      param_key=$(echo "${args_str}" | cut -d "${delimiter}" -f 1)
+      args_str=$(echo "${args_str}" | cut -d "${delimiter}" -f 2-)
+      # Taking param value, such as "debug"
+      param_val=$(echo "${args_str}" | cut -d ' ' -f 1)
+      # Saving leftover
+      args_str=$(echo "${args_str}" | cut -d ' ' -f 2-)
+      # If leftover is the same as prev. value then it was the last argument in
+      # the string, so we finish loop
+      if [ "${param_val}" = "${args_str}" ]; then
+        args_str=""
+      fi
+      # Saving parameter to the map
+      args_map_ref["${param_key}"]="${param_val}"
     done
-    log_info "Pre-commit hook arguments: ${orig_str}"
   fi
 }
