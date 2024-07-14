@@ -5,11 +5,9 @@ on:
   pull_request:
     paths:
       - .github/workflows/test-logging.yml
-      - scripts/**
       - src/**
       - tests/**
       - .bpkg.lock
-      - entrypoint.sh
 
 defaults:
   run:
@@ -17,17 +15,11 @@ defaults:
 
 jobs:
   functional-tests:
-    name: Tests
+    name: All
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v4
-      - name: Setup bpkg
-        uses: bpkg/setup-bpkg-action@v1
       - name: Run tests
-        run: |
-          test_files=$(find "tests" -type f \( -perm -u=x -o -perm -g=x -o -perm -o=x \))
-          for test_file in $test_files; do
-            ${test_file}
-          done
+        run: make test

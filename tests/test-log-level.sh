@@ -2,6 +2,7 @@
 
 TESTS_DIR=$(dirname $(realpath "$0"))
 ROOT_DIR=$(dirname "${TESTS_DIR}")
+SRC_DIR="${ROOT_DIR}/src"
 
 test_log_level() {
   command="$1"
@@ -12,7 +13,7 @@ test_log_level() {
   test_name="test_log_level: ${command}, ${log_level_cmd}, ${log_level_env_var}, ${debug_expected}"
 
   output=$(PRE_COMMIT_GRYPE_LOG_LEVEL="${log_level_env_var}" \
-    ${ROOT_DIR}/entrypoint.sh "${command}" \
+    ${SRC_DIR}/main.sh "${command}" \
     "--hook-args=--log-level=${log_level_cmd}" \
     2>&1 >/dev/null)
 
