@@ -3,6 +3,22 @@ default_install_hook_types: ["pre-commit", "pre-push"]
 default_stages: ["commit", "push"]
 minimum_pre_commit_version: 2.18.0
 repos:
+  - repo: local
+    hooks:
+      - id: build
+        name: Build
+        entry: make build
+        language: system
+        pass_filenames: false
+        verbose: true
+        stages: ["push"]
+      - id: test
+        name: Unit tests
+        entry: make test
+        language: system
+        pass_filenames: false
+        verbose: true
+        stages: ["push"]
   # Security
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
@@ -13,10 +29,11 @@ repos:
     hooks:
       - id: gitleaks
   - repo: https://github.com/fabasoad/pre-commit-grype
-    rev: v0.3.2-rc3
+    rev: v0.3.2
     hooks:
       - id: grype-dir
         args:
+          - --grype-args=--by-cve --fail-on=low
           - --hook-args=--log-level debug
         stages: ["push"]
   # Markdown

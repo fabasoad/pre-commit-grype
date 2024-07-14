@@ -1,5 +1,4 @@
 .DS_Store
-.bpkg
 .gitleaks.toml
 .vscode/*
 !.vscode/settings.json
