@@ -17,8 +17,6 @@ test_log_color_param_precedence() {
     "--grype-args=--quiet --hook-args=--log-level=debug --log-color=${log_color_cmd}" \
     2>&1 >/dev/null)
 
-  echo "${output}" > test.txt
-
   actual=$(echo "${output}" | grep '\[22m')
   if [ -z "${actual}" ] && [ "${color_expected}" = "true" ]; then
     echo "[FAIL] ${test_name} - logs are expected to be colored"
@@ -44,8 +42,6 @@ test_log_color_env_var() {
     ${SRC_DIR}/main.sh "${command}" \
     "--grype-args=--quiet --hook-args=--log-level=debug" \
     2>&1 >/dev/null)
-
-  echo "${output}" > test.txt
 
   actual=$(echo "${output}" | grep '\[22m')
   if [ -z "${actual}" ] && [ "${color_expected}" = "true" ]; then
