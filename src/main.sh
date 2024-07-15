@@ -28,7 +28,9 @@ main() {
 
   # Apply configs
   set +u
-  apply_logging_config "${hook_args_map["${CONFIG_LOG_LEVEL_ARG_NAME}"]}"
+  apply_logging_config \
+    "${hook_args_map["${CONFIG_LOG_LEVEL_ARG_NAME}"]}" \
+    "${hook_args_map["${CONFIG_LOG_COLOR_ARG_NAME}"]}"
 
   if [ "${#hook_args_map[@]}" -ne 0 ]; then
     fabasoad_log "info" "Pre-commit hook arguments: $(map_to_str hook_args_map)"

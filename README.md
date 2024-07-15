@@ -18,6 +18,7 @@
     - [Grype](#grype)
     - [pre-commit-grype](#pre-commit-grype)
       - [Log level](#log-level)
+      - [Log color](#log-color)
   - [Examples](#examples)
 
 ## How it works?
@@ -162,6 +163,16 @@ please look at the [Grype parameters](#grype).
 - Environment variable: `PRE_COMMIT_GRYPE_LOG_LEVEL`
 - Possible values: `debug`, `info`, `warning`, `error`
 - Default: `info`
+
+##### Log color
+
+With this parameter you can enable/disable the coloring of `pre-commit-grype`
+hook logs. It doesn't impact `grype` logs coloring.
+
+- Parameter name: `--log-color`
+- Environment variable: `PRE_COMMIT_GRYPE_LOG_COLOR`
+- Possible values: `true`, `false`
+- Default: `true`
 
 ### Examples
 
