@@ -1,10 +1,1 @@
-[pre-commit-grype] 2024-07-15 21:50:32 level=info Pre-commit hook arguments: --log-level=debug
-[pre-commit-grype] 2024-07-15 21:50:32 level=debug Verifying Grype installation
-[pre-commit-grype] 2024-07-15 21:50:32 level=debug Grype is found at /opt/homebrew/bin/grype. Installation skipped
-[pre-commit-grype] 2024-07-15 21:50:32 level=info Grype path: /opt/homebrew/bin/grype
-[pre-commit-grype] 2024-07-15 21:50:32 level=info Grype version: 0.79.2
-[pre-commit-grype] 2024-07-15 21:50:32 level=info Grype arguments: dir:. --quiet --exclude=**/.pre-commit-grype
-[pre-commit-grype] 2024-07-15 21:50:32 level=debug Run Grype scanning:
-[pre-commit-grype] 2024-07-15 21:50:32 level=debug Grype scanning completed
-[pre-commit-grype] 2024-07-15 21:50:32 level=info Grype exit code: 0
-[pre-commit-grype] 2024-07-15 21:50:32 level=debug /Users/yevhen.fabizhevskyi/Source/personal/pre-commit-grype/.pre-commit-grype directory has been removed
+/Users/yevhen.fabizhevskyi/Source/personal/pre-commit-grype/src/lib/utils/validators.sh: line 8: fabasoad_log: command not found
