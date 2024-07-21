@@ -4,7 +4,7 @@ name: Functional Tests
 on:
   pull_request:
     paths:
-      - .github/workflows/test-logging.yml
+      - .github/workflows/functional-tests.yml
       - src/**
       - tests/**
       - .bpkg.lock
@@ -14,7 +14,7 @@ defaults:
     shell: sh
 
 jobs:
-  functional-tests:
+  functional-tests-all:
     name: All
     runs-on: ubuntu-latest
     timeout-minutes: 5
