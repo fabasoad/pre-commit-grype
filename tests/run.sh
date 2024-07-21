@@ -3,7 +3,7 @@
 TESTS_DIR=$(dirname $(realpath "$0"))
 
 main() {
-  total_tests=8
+  total_tests=11
   failed_tests=0
 
   current_file=$(realpath "$0")

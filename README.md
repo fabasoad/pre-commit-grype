@@ -174,6 +174,16 @@ hook logs. It doesn't impact `grype` logs coloring.
 - Possible values: `true`, `false`
 - Default: `true`
 
+##### Grype version
+
+Specifies specific grype version to use. This will work only if grype is not globally
+installed, otherwise globally installed grype takes precedence.
+
+- Parameter name: `--grype-version`
+- Environment variable: `PRE_COMMIT_GRYPE_GRYPE_VERSION`
+- Possible values: Grype version that you can find [here](https://github.com/anchore/grype/releases)
+- Default: `latest`
+
 ### Examples
 
 Pass arguments separately from each other:
