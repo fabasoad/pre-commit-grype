@@ -19,6 +19,8 @@
     - [pre-commit-grype](#pre-commit-grype)
       - [Log level](#log-level)
       - [Log color](#log-color)
+      - [Grype version](#grype-version)
+      - [Clean cache](#clean-cache)
   - [Examples](#examples)
 
 ## How it works?
@@ -183,6 +185,19 @@ installed, otherwise globally installed grype takes precedence.
 - Environment variable: `PRE_COMMIT_GRYPE_GRYPE_VERSION`
 - Possible values: Grype version that you can find [here](https://github.com/anchore/grype/releases)
 - Default: `latest`
+
+##### Clean cache
+
+With this parameter you can choose either to keep cache directory, or to remove
+it. By default, it removes cache directory. With `false` parameter cache directory
+will not be removed which means that if `grype` is not installed globally every
+subsequent run won't download `grype` again. Don't forget to add cache directory
+into the `.gitignore` file.
+
+- Parameter name: `--clean-cache`
+- Environment variable: `PRE_COMMIT_GRYPE_CLEAN_CACHE`
+- Possible values: `true`, `false`
+- Default: `true`
 
 ### Examples
 

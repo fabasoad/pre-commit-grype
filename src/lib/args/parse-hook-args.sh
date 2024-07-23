@@ -10,10 +10,10 @@ parse_hook_args() {
     while [ ${#args_str} -gt 0 ]; do
       delimiter=""
       case "${args_str}" in
-        "${CONFIG_LOG_LEVEL_ARG_NAME}="*|"${CONFIG_LOG_COLOR_ARG_NAME}="*|"${CONFIG_GRYPE_VERSION_ARG_NAME}="*)
+        "${CONFIG_LOG_LEVEL_ARG_NAME}="*|"${CONFIG_LOG_COLOR_ARG_NAME}="*|"${CONFIG_GRYPE_VERSION_ARG_NAME}="*|"${CONFIG_CLEAN_CACHE_ARG_NAME}="*)
           delimiter="="
           ;;
-        "${CONFIG_LOG_LEVEL_ARG_NAME} "*|"${CONFIG_LOG_COLOR_ARG_NAME} "*|"${CONFIG_GRYPE_VERSION_ARG_NAME} "*)
+        "${CONFIG_LOG_LEVEL_ARG_NAME} "*|"${CONFIG_LOG_COLOR_ARG_NAME} "*|"${CONFIG_GRYPE_VERSION_ARG_NAME} "*|"${CONFIG_CLEAN_CACHE_ARG_NAME} "*)
           delimiter=" "
           ;;
         *)
