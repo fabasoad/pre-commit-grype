@@ -31,6 +31,7 @@ main() {
   apply_logging_config \
     "${hook_args_map["${CONFIG_LOG_LEVEL_ARG_NAME}"]}" \
     "${hook_args_map["${CONFIG_LOG_COLOR_ARG_NAME}"]}"
+  apply_cache_config "${hook_args_map["${CONFIG_CLEAN_CACHE_ARG_NAME}"]}"
   apply_grype_config "${hook_args_map["${CONFIG_GRYPE_VERSION_ARG_NAME}"]}"
 
   if [ "${#hook_args_map[@]}" -ne 0 ]; then
