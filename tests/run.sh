@@ -21,4 +21,4 @@ main() {
   echo "Total $((total_tests - failed_tests)) tests passed, ${failed_tests} tests failed."
 }
 
-main $@
+main "$@"

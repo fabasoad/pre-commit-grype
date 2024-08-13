@@ -5,7 +5,7 @@ _run_validator() {
   shift
 
   set +e
-  err_msg=$(${func_name} $@ 2>&1 >/dev/null)
+  err_msg=$(${func_name} "$@" 2>&1 >/dev/null)
   exit_code=$?
   if [ "${exit_code}" -ne 0 ]; then
     fabasoad_log "error" "${err_msg}"
@@ -15,9 +15,9 @@ _run_validator() {
 }
 
 validate_enum() {
-  _run_validator "fabasoad_validate_enum" $@
+  _run_validator "fabasoad_validate_enum" "$@"
 }
 
 validate_semver() {
-  _run_validator "fabasoad_validate_semver" $@
+  _run_validator "fabasoad_validate_semver" "$@"
 }

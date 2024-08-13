@@ -9,4 +9,4 @@ main() {
   rm -rf "${bpkg_packages_dir}"
 }
 
-main $@
+main "$@"
