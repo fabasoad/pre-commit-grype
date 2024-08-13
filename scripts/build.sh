@@ -13,4 +13,4 @@ main() {
   done < "${lock_file}"
 }
 
-main $@
+main "$@"
