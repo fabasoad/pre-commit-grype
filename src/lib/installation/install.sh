@@ -7,7 +7,7 @@ install() {
     fabasoad_log "debug" "Grype is found at ${grype_path}. Installation skipped"
   else
     if [ -f "${CONFIG_CACHE_APP_BIN_DIR}" ]; then
-      err_msg="${CONFIG_CACHE_APP_BIN_DIR} existing file is prevents from creating"
+      err_msg="${CONFIG_CACHE_APP_BIN_DIR} existing file prevents from creating"
       err_msg="${err_msg} a cache directory with the same name. Please either"
       err_msg="${err_msg} remove this file or install grype globally manually."
       fabasoad_log "error" "${err_msg}"
