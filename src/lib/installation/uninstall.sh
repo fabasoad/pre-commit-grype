@@ -2,9 +2,13 @@
 
 uninstall() {
   if [ "${PRE_COMMIT_GRYPE_CLEAN_CACHE}" = "true" ]; then
-    fabasoad_log "debug" "${CONFIG_TEMP_DIR} directory has been removed"
-    rm -rf "${CONFIG_TEMP_DIR}"
+    rm -rf "${CONFIG_CACHE_APP_DIR}"
+    fabasoad_log "debug" "${CONFIG_CACHE_APP_DIR} directory has been removed"
+    if [ -z "$(ls -A "${CONFIG_CACHE_ROOT_DIR}")" ]; then
+      rm -rf "${CONFIG_CACHE_ROOT_DIR}"
+      fabasoad_log "debug" "${CONFIG_CACHE_ROOT_DIR} directory has been removed since it is empty"
+    fi
   else
-    fabasoad_log "debug" "${CONFIG_TEMP_DIR} directory was not removed"
+    fabasoad_log "debug" "${CONFIG_CACHE_APP_DIR} directory was not removed"
   fi
 }

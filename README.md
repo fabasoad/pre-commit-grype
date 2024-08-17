@@ -26,8 +26,8 @@
 ## How it works?
 
 At first hook tries to use globally installed `grype` tool. And if it doesn't exist
-then hook installs `grype` into a `.pre-commit-grype` temporary directory that
-will be removed after scanning is completed.
+then hook installs `grype` into a `.fabasoad/pre-commit-grype` temporary directory
+that will be removed after scanning is completed.
 
 ## Prerequisites
 
@@ -178,8 +178,8 @@ hook logs. It doesn't impact `grype` logs coloring.
 
 ##### Grype version
 
-Specifies specific grype version to use. This will work only if grype is not globally
-installed, otherwise globally installed grype takes precedence.
+Specifies specific `grype` version to use. This will work only if `grype` is not
+globally installed, otherwise globally installed `grype` takes precedence.
 
 - Parameter name: `--grype-version`
 - Environment variable: `PRE_COMMIT_GRYPE_GRYPE_VERSION`
@@ -188,11 +188,11 @@ installed, otherwise globally installed grype takes precedence.
 
 ##### Clean cache
 
-With this parameter you can choose either to keep cache directory, or to remove
-it. By default, it removes cache directory. With `false` parameter cache directory
-will not be removed which means that if `grype` is not installed globally every
-subsequent run won't download `grype` again. Don't forget to add cache directory
-into the `.gitignore` file.
+With this parameter you can choose either to keep cache directory (`.fabasoad/pre-commit-grype`),
+or to remove it. By default, it removes cache directory. With `false` parameter
+cache directory will not be removed which means that if `grype` is not installed
+globally every subsequent run won't download `grype` again. Don't forget to add
+cache directory into the `.gitignore` file.
 
 - Parameter name: `--clean-cache`
 - Environment variable: `PRE_COMMIT_GRYPE_CLEAN_CACHE`
