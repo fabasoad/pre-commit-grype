@@ -31,6 +31,3 @@ CONFIG_CACHE_ROOT_DIR="${_PRE_COMMIT_GRYPE_CONSUMER_ROOT_DIR}/${CONFIG_CACHE_ROO
 CONFIG_CACHE_APP_DIR_NAME="${_PRE_COMMIT_GRYPE_APP_NAME}"
 CONFIG_CACHE_APP_DIR="${CONFIG_CACHE_ROOT_DIR}/${CONFIG_CACHE_APP_DIR_NAME}"
 CONFIG_CACHE_APP_BIN_DIR="${CONFIG_CACHE_APP_DIR}/bin"
-
-# TODO: Change dir to .fabasoad/pre-commit-grype (Same for snyk)
-# TODO: pre-commit-container (reusable workflow) - use safe.directory parameter in actions/checkout
