@@ -14,6 +14,6 @@ uninstall() {
       _remove_dir "${CONFIG_CACHE_ROOT_DIR}"
     fi
   else
-    fabasoad_log "debug" "${CONFIG_CACHE_APP_DIR} directory was not removed"
+    fabasoad_log "debug" "${CONFIG_CACHE_APP_DIR} directory was preserved"
   fi
 }
