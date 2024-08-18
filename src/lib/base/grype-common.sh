@@ -4,7 +4,7 @@ set -u
 grype_common() {
   # Removing trailing space (sed command) is needed here in case there were no
   # --grype-args passed, so that $1 in this case is "dir:. "
-  grype_args="$(echo "$1" | sed 's/ *$//') --exclude=**/${CONFIG_TEMP_DIR_NAME}"
+  grype_args="$(echo "$1" | sed 's/ *$//') --exclude=**/${CONFIG_CACHE_ROOT_DIR_NAME}"
 
   grype_path=$(install)
   grype_version=$(${grype_path} --version | cut -d ' ' -f 2)
@@ -22,9 +22,9 @@ grype_common() {
   if [ "${grype_exit_code}" = "0" ]; then
     fabasoad_log "info" "${msg}"
   else
-    fabasoad_log "warning" "${msg}"
+    fabasoad_log "error" "${msg}"
   fi
 
-  uninstall "${CONFIG_TEMP_DIR}"
+  uninstall
   exit ${grype_exit_code}
 }
