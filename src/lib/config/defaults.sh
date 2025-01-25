@@ -3,6 +3,7 @@
 # System
 _PRE_COMMIT_GRYPE_CONSUMER_ROOT_DIR="$(pwd)"
 _PRE_COMMIT_GRYPE_APP_NAME="pre-commit-grype"
+_UPSTREAM_FULL_REPO_NAME="anchore/grype"
 
 # Logging
 CONFIG_LOG_LEVEL_ARG_NAME="--log-level"

@@ -3,8 +3,8 @@ set -u
 
 grype_common() {
   # Removing trailing space (sed command) is needed here in case there were no
-  # --grype-args passed, so that $1 in this case is "dir:. "
-  grype_args="$(echo "$1" | sed 's/ *$//') --exclude=**/${CONFIG_CACHE_ROOT_DIR_NAME}"
+  # --grype-args passed, so that ${1} in this case is "dir:. "
+  grype_args="$(echo "${1}" | sed 's/ *$//') --exclude=**/${CONFIG_CACHE_ROOT_DIR_NAME}"
 
   grype_path=$(install)
   grype_version=$(${grype_path} --version | cut -d ' ' -f 2)

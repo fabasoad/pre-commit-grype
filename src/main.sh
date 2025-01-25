@@ -13,12 +13,19 @@ _import_all() {
   done
 }
 
+# Validate that all needed dependencies are installed on the machine
+_validate_prerequisites() {
+  validate_tool_installed "jq"
+  validate_tool_installed "curl"
+}
+
 main() {
   _import_all
+  _validate_prerequisites
 
   cmd_grype_dir="grype-dir"
 
-  cmd_actual="$1"
+  cmd_actual="${1}"
   shift
 
   declare -A all_args_map
@@ -44,7 +51,7 @@ main() {
       grype_dir "${all_args_map["grype-args"]}"
       ;;
     *)
-      validate_enum "hook" "${cmd_actual}" "${cmd_grype_dir}"
+      validate_enum "${cmd_actual}" "${cmd_grype_dir}"
       ;;
   esac
 }
