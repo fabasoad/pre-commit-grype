@@ -15,16 +15,16 @@ install() {
     fi
     grype_path="${CONFIG_CACHE_APP_BIN_DIR}/grype"
     mkdir -p "${CONFIG_CACHE_APP_BIN_DIR}"
-    if [ ! -f "${grype_path}" ]; then
+    if [ -f "${grype_path}" ]; then
+      fabasoad_log "debug" "Grype is found at ${grype_path}. Installation skipped"
+    else
       fabasoad_log "debug" "Grype is not found. Downloading ${PRE_COMMIT_GRYPE_GRYPE_VERSION} version:"
       if [ "${PRE_COMMIT_GRYPE_GRYPE_VERSION}" = "latest" ]; then
-        curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b "${CONFIG_CACHE_APP_BIN_DIR}"
+        curl -sSfL "https://raw.githubusercontent.com/${_UPSTREAM_FULL_REPO_NAME}/main/install.sh" | sh -s -- -b "${CONFIG_CACHE_APP_BIN_DIR}"
       else
-        curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b "${CONFIG_CACHE_APP_BIN_DIR}" "v${PRE_COMMIT_GRYPE_GRYPE_VERSION}"
+        curl -sSfL "https://raw.githubusercontent.com/${_UPSTREAM_FULL_REPO_NAME}/main/install.sh" | sh -s -- -b "${CONFIG_CACHE_APP_BIN_DIR}" "v${PRE_COMMIT_GRYPE_GRYPE_VERSION}"
       fi
       fabasoad_log "debug" "Downloading completed"
-    else
-      fabasoad_log "debug" "Grype is found at ${grype_path}. Installation skipped"
     fi
   fi
   echo "${grype_path}"
