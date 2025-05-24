@@ -187,7 +187,7 @@ globally installed, otherwise globally installed `grype` takes precedence.
 
 - Parameter name: `--grype-version`
 - Environment variable: `PRE_COMMIT_GRYPE_GRYPE_VERSION`
-- Possible values: Grype version that you can find [here](https://github.com/anchore/grype/releases)
+- Possible values: [Grype version](https://github.com/anchore/grype/releases)
 - Default: `latest`
 
 ##### Clean cache
