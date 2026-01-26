@@ -20,9 +20,9 @@ install() {
     else
       fabasoad_log "debug" "Grype is not found. Downloading ${PRE_COMMIT_GRYPE_GRYPE_VERSION} version:"
       if [ "${PRE_COMMIT_GRYPE_GRYPE_VERSION}" = "latest" ]; then
-        curl -sSfL "https://raw.githubusercontent.com/${_UPSTREAM_FULL_REPO_NAME}/main/install.sh" | sh -s -- -b "${CONFIG_CACHE_APP_BIN_DIR}"
+        curl -sSfL "https://raw.githubusercontent.com/${_UPSTREAM_FULL_REPO_NAME}/main/install.sh" | sh -s -- -b "${CONFIG_CACHE_APP_BIN_DIR}" >&2
       else
-        curl -sSfL "https://raw.githubusercontent.com/${_UPSTREAM_FULL_REPO_NAME}/main/install.sh" | sh -s -- -b "${CONFIG_CACHE_APP_BIN_DIR}" "v${PRE_COMMIT_GRYPE_GRYPE_VERSION}"
+        curl -sSfL "https://raw.githubusercontent.com/${_UPSTREAM_FULL_REPO_NAME}/main/install.sh" | sh -s -- -b "${CONFIG_CACHE_APP_BIN_DIR}" "v${PRE_COMMIT_GRYPE_GRYPE_VERSION}" >&2
       fi
       fabasoad_log "debug" "Downloading completed"
     fi

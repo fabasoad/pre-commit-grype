@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PRE_COMMIT_GRYPE_SRC_DIR=$(dirname $(realpath "$0"))
+PRE_COMMIT_GRYPE_SRC_DIR=$(dirname "$(realpath "$0")")
 
 # Import all scripts
 _import_all() {
