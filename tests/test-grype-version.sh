@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-TESTS_DIR=$(dirname $(realpath "$0"))
+TESTS_DIR=$(dirname "$(realpath "$0")")
 ROOT_DIR=$(dirname "${TESTS_DIR}")
 SRC_DIR="${ROOT_DIR}/src"
 
@@ -16,14 +16,14 @@ test_grype_version_param_precedence() {
     echo "[SKIP] ${test_name} - grype installed globally"
   else
     output=$(PRE_COMMIT_GRYPE_GRYPE_VERSION="${grype_version_env_var}" \
-      ${SRC_DIR}/main.sh "${command}" \
+      "${SRC_DIR}/main.sh" "${command}" \
       "--grype-args=--quiet --hook-args=--log-level=info --grype-version=${grype_version_cmd}" \
       2>&1 >/dev/null)
 
     version_actual=$(echo "${output}" | grep 'Grype version:' | sed 's/.*Grype version: \([0-9.]*\).*/\1/')
     if [ "${version_actual}" != "${version_expected}" ]; then
       echo "[FAIL] ${test_name} - Expected: ${version_expected}. Actual: ${version_actual}"
-      echo "\n${output}"
+      printf "\n%s" "${output}"
       exit 1
     fi
 
@@ -42,14 +42,14 @@ test_grype_version_env_var() {
     echo "[SKIP] ${test_name} - grype installed globally"
   else
     output=$(PRE_COMMIT_GRYPE_GRYPE_VERSION="${grype_version_env_var}" \
-      ${SRC_DIR}/main.sh "${command}" \
+      "${SRC_DIR}/main.sh" "${command}" \
       "--grype-args=--quiet --hook-args=--log-level=info" \
       2>&1 >/dev/null)
 
     version_actual=$(echo "${output}" | grep 'Grype version:' | sed 's/.*Grype version: \([0-9.]*\).*/\1/')
     if [ "${version_actual}" != "${version_expected}" ]; then
       echo "[FAIL] ${test_name} - Expected: ${version_expected}. Actual: ${version_actual}"
-      echo "\n${output}"
+      printf "\n%s" "${output}"
       exit 1
     fi
 
@@ -58,11 +58,11 @@ test_grype_version_env_var() {
 }
 
 main() {
-  echo "Testing $(basename "$0")..."
+  printf "\nTesting %s...\n" "$(basename "$0")"
   test_grype_version_param_precedence "grype-dir" "0.79.2" "0.79.3" "0.79.2"
   test_grype_version_param_precedence "grype-dir" "0.79.3" "0.79.2" "0.79.3"
   test_grype_version_env_var "grype-dir" "0.79.2"
-  echo "[PASS] Total 3 tests passed\n"
+  printf "[PASS] Total 3 tests passed\n"
 }
 
 main "$@"

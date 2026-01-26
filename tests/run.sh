@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-TESTS_DIR=$(dirname $(realpath "$0"))
+TESTS_DIR=$(dirname "$(realpath "$0")")
 
 main() {
   total_tests=11
@@ -18,7 +18,7 @@ main() {
   done
 
   #perl -E 'say "-" x 45'
-  echo "Total $((total_tests - failed_tests)) tests passed, ${failed_tests} tests failed."
+  printf "\nTotal %s tests passed, %s tests failed.\n" "$((total_tests - failed_tests))" "${failed_tests}"
 }
 
 main "$@"
